@@ -2678,6 +2678,11 @@ function QuizPane({
   );
 }
 
+// Add this type guard before the Block function
+function isTableBlock(b: any): b is { type: "table"; head: string[]; rows: string[][] } {
+  return b.type === "table" && "head" in b && "rows" in b;
+}
+
 // ── Block Renderer ────────────────────────────────────────────────────────
 function Block({ b }: { b: (typeof CHAPTERS)[0]["content"][0] }) {
   if (b.type === "p")
@@ -2726,7 +2731,7 @@ function Block({ b }: { b: (typeof CHAPTERS)[0]["content"][0] }) {
         {b.text}
       </pre>
     );
-  if (b.type === "table")
+ if (isTableBlock(b))
     return (
       <div style={{ overflowX: "auto", margin: "0 0 14px" }}>
         <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
