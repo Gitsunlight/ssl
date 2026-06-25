@@ -1,5 +1,6 @@
 "use client";
 
+import jsx from "react/jsx-runtime";
 import { useState, useEffect, useRef, useCallback } from "react";
 
 // ── Design Tokens ─────────────────────────────────────────────────────────
@@ -2678,9 +2679,13 @@ function QuizPane({
   );
 }
 
-// Add this type guard before the Block function
+// Type guard before the Block function
 function isTableBlock(b: any): b is { type: "table"; head: string[]; rows: string[][] } {
   return b.type === "table" && "head" in b && "rows" in b;
+}
+
+function isStackBlock(b: any): b is { type: "stack"; rows: [string, string][] } {
+  return b.type === "stack" && "rows" in b && Array.isArray(b.rows);
 }
 
 // ── Block Renderer ────────────────────────────────────────────────────────
@@ -2781,7 +2786,7 @@ function Block({ b }: { b: (typeof CHAPTERS)[0]["content"][0] }) {
         </table>
       </div>
     );
-  if (b.type === "stack")
+  if (isStackBlock(b))
     return (
       <div style={{ margin: "0 0 14px" }}>
         {b.rows.map(([label, desc], i) => (
@@ -2849,14 +2854,15 @@ function ChapterView({
   onScore: (n: number, score: number, total: number) => void;
 }) {
   const [tab, setTab] = useState("content");
-  const DemoComp = {
+  const DemoComponents: Record<string, React.ComponentType> = {
     stack: StackDemo,
     vectors: VectorDemo,
     attention: AttentionDemo,
     training: TrainingDemo,
     moe: MoEDemo,
     kvcache: KVCacheDemo,
-  }[ch.demo as keyof typeof DemoComp];
+  };
+  const DemoComponent = ch.demo ? DemoComponents[ch.demo] : null;
   const TABS = [
     { id: "content", label: "📖 Content" },
     { id: "quiz", label: "🎯 Quiz", badge: QUIZZES[ch.n as keyof typeof QUIZZES]?.length },
@@ -3016,7 +3022,7 @@ function ChapterView({
             {ch.content.map((b, i) => (
               <Block key={i} b={b} />
             ))}
-            {DemoComp && (
+            {DemoComponent && (
               <div
                 style={{
                   padding: "20px",
@@ -3038,7 +3044,7 @@ function ChapterView({
                 >
                   ⚡ Interactive Demo
                 </div>
-                <DemoComp />
+                <DemoComponent />
               </div>
             )}
           </div>
