@@ -271,7 +271,16 @@ export default function Home() {
       <section className="catalog-hero" style={{ borderBottom: `1px solid ${T.border}` }}>
         <div className="hero-inner">
           {/* Logo / Badge */}
-          <div className="catalog-badge" style={{ background: T.elevated, border: `1px solid ${T.border}` }}>
+          <div
+            className="catalog-badge"
+            style={{
+              background: T.elevated,
+              border: `1px solid ${T.border}`,
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             <span style={{ fontSize: 20 }}>☀️</span>
             <span style={{ color: T.text, fontWeight: 700, fontSize: 14 }}>
               Sunlight Academy
@@ -525,7 +534,7 @@ export default function Home() {
               marginBottom: 18,
             }}
           >
-            upvote/submit for what you need. we'll build it for you.
+            upvote/submit for what you need. we&apos;ll build it for you.
           </div>
           <button
             style={{

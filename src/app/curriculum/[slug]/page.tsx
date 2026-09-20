@@ -1,8 +1,10 @@
 import { notFound } from "next/navigation";
+import CloudComputingCurriculumPage from "@/app/curriculums/cloud-computing";
 import FrontierLLMCurriculumPage from "@/app/curriculums/frontier-llm";
 import GraphCurriculumPage from "@/app/curriculums/graph-engineeering";
 
 const supportedCurricula = {
+  "cloud-computing": CloudComputingCurriculumPage,
   "frontier-llm": FrontierLLMCurriculumPage,
   "graph-engineering": GraphCurriculumPage,
 } as const;
