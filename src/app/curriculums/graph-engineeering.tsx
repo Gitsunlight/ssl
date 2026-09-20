@@ -42,17 +42,19 @@ const PC = [
 
 // ── Parts ─────────────────────────────────────────────────────────────────
 const PARTS = [
-  { id: 0, label: "Territory Map", icon: "🗺️", chs: [0] },
-  { id: 1, label: "Graph Foundations", icon: "🔵", chs: [1, 2, 3, 4] },
-  { id: 2, label: "Core Algorithms", icon: "🧭", chs: [5, 6, 7, 8, 9] },
-  { id: 3, label: "Graph Databases", icon: "🗄️", chs: [10, 11, 12] },
-  { id: 4, label: "Knowledge Graphs", icon: "🕸️", chs: [13, 14, 15] },
-  { id: 5, label: "Graph Neural Networks", icon: "🧠", chs: [16, 17, 18, 19] },
-  { id: 6, label: "Graph RAG & Retrieval", icon: "🔍", chs: [20, 21, 22] },
-  { id: 7, label: "Graph Analytics at Scale", icon: "⚙️", chs: [23, 24, 25] },
-  { id: 8, label: "Graphs in AI Systems", icon: "🤖", chs: [26, 27, 28] },
-  { id: 9, label: "Engineering Frontier", icon: "🚀", chs: [29, 30, 31] },
-  { id: 10, label: "Compiler & Program Graphs", icon: "🧩", chs: [32, 33, 34, 35] },
+  { id: 0,  label: "Territory Map",              icon: "🗺️", chs: [0] },
+  { id: 1,  label: "Graph Foundations",          icon: "🔵", chs: [1, 2, 3, 4] },
+  { id: 2,  label: "Core Algorithms",            icon: "🧭", chs: [5, 6, 7, 8, 9, 37, 38, 39, 40] },
+  { id: 3,  label: "Graph Databases",            icon: "🗄️", chs: [10, 11, 12] },
+  { id: 4,  label: "Knowledge Graphs",           icon: "🕸️", chs: [13, 14, 15] },
+  { id: 5,  label: "Graph Neural Networks",      icon: "🧠", chs: [16, 17, 18, 19] },
+  { id: 6,  label: "Graph RAG & Retrieval",      icon: "🔍", chs: [20, 21, 22] },
+  { id: 7,  label: "Graph Analytics at Scale",   icon: "⚙️", chs: [23, 24, 25] },
+  { id: 8,  label: "Graphs in AI Systems",       icon: "🤖", chs: [26, 27, 28] },
+  { id: 9,  label: "Engineering Frontier",       icon: "🚀", chs: [29, 30, 31] },
+  { id: 10, label: "Compiler & Program Graphs",  icon: "🧩", chs: [32, 33, 34, 35] },
+  { id: 11, label: "Organizational Memory Graphs", icon: "🏢", chs: [36] },
+  { id: 12, label: "Theory Foundations",         icon: "📐", chs: [41, 42, 43] },
 ];
 
 // ── Chapters ──────────────────────────────────────────────────────────────
@@ -1135,6 +1137,427 @@ y = x4 * 2`,
       },
     ],
   },
+  {
+    n: 36,
+    part: 11,
+    title: "OMG: Organizational Memory Graph",
+    tagline: "The graph of graphs that remembers how an organization thinks, acts, and adapts",
+    insight:
+      "An organization is not a pile of documents; it is an evolving graph of people, teams, decisions, artifacts, dependencies, and memory. OMG makes that memory explicit, queryable, and operationally useful.",
+    demo: "knowledgegraph",
+    content: [
+      {
+        type: "p",
+        text: "The final frontier of graph engineering is not only modeling the world — it is modeling the internal memory of a company itself. An OMG, or Organizational Memory Graph, is a graph of graphs: a living system that captures the relationships between people, teams, systems, workflows, decisions, policies, incidents, and artifacts. For a graph learner, this is the natural culmination of everything above: entities, edges, subgraphs, retrieval, reasoning, and memory. For a developer, it is an operational architecture for enterprise knowledge: a way to connect context across products, teams, and systems so software can reason about the organization instead of just isolated records.",
+      },
+      {
+        type: "p",
+        text: "Why does this matter in practice? Because most organizational knowledge is not stored in one table or one service. It is distributed across tickets, docs, code repositories, ownership maps, deployment pipelines, incident reports, dashboards, and human conversations. OMG gives that knowledge a graph substrate so the organization can answer questions like: who owns the service, which teams depend on it, what decisions changed the architecture, which incidents were triggered by the same root cause, and which workflows are brittle because a single person holds the key context.",
+      },
+      {
+        type: "table",
+        head: ["OMG Layer", "What It Does", "Why It Matters"],
+        rows: [
+          ["OMGM", "Defines the canonical graph model: typed entities, edges, properties, lifecycle state, and provenance", "This is the schema and semantics of organizational memory"],
+          ["OMGDB", "Stores the graph with indexing, transactions, versioning, and graph-native retrieval", "This is the durable system of record for enterprise facts"],
+          ["OMGQL", "Expresses organizational patterns as graph queries", "Lets engineers and analysts ask questions without raw JOIN-heavy logic"],
+          ["OMGQE", "Executes traversal, ranking, analytics, and subgraph reasoning", "Powers retrieval, impact analysis, and grounded AI behavior"],
+          ["OMGP", "Parses and optimizes OMGQL into executable plans", "Bridges the language layer to the execution engine"],
+          ["OMGAPI", "Exposes the graph to apps, services, and agents", "Makes memory usable in internal tools and AI systems"],
+          ["OMGEX", "Lets humans inspect and visualize the graph interactively", "Simplifies debugging, governance, and learning"],
+          ["OMGCLI", "Provides terminal operations for scripts and operators", "Supports automation, maintenance, and operational workflows"],
+        ],
+      },
+      {
+        type: "code",
+        text: `Example OMG graph model:
+
+(:Team {name: "Platform"})
+  -[:owns]-> (:Service {name: "Payments API"})
+  -[:depends_on]-> (:Service {name: "Ledger"})
+  -[:has_owner]-> (:Person {name: "Aisha"})
+
+(:Incident {id: "INC-2041", severity: "sev1"})
+  -[:affects]-> (:Service {name: "Payments API"})
+  -[:caused_by]-> (:RootCause {type: "misconfigured rollout"})
+
+(:Decision {id: "D-881", status: "approved"})
+  -[:changed]-> (:System {name: "Payments API"})
+  -[:approved_by]-> (:Person {name: "Milo"})
+
+OMGQL:
+MATCH (team:Team)-[:owns]->(svc:Service)
+WHERE svc.name = "Payments API"
+MATCH (svc)-[:depends_on]->(dep:Service)
+OPTIONAL MATCH (inc:Incident)-[:affects]->(svc)
+RETURN team.name, svc.name, dep.name, count(inc) AS incident_count
+ORDER BY incident_count DESC`,
+      },
+      {
+        type: "table",
+        head: ["Developer Concern", "Graph Answer", "Typical OMG Design"],
+        rows: [
+          ["Who owns this service?", "Traverse owner and responsibility edges", "Team → owns → Service"],
+          ["What failed last time?", "Follow incident-to-root-cause links", "Incident → caused_by → Dependency"],
+          ["Which systems are at risk?", "Query shared dependencies and critical paths", "Service → depends_on → Service"],
+          ["What decisions changed this architecture?", "Walk decision history over time", "Decision → affects → System"],
+          ["Who is the bottleneck?", "Measure degree, centrality, and single points of failure", "Person → owns → many critical artifacts"],
+          ["Can an agent reason over context?", "Retrieve relevant subgraphs dynamically", "Agent query → OMGQE → grounded answer"],
+        ],
+      },
+      {
+        type: "p",
+        text: "For developers, the big design challenge is not just storage; it is semantics. An OMG needs clean entity typing, explicit edge semantics, provenance for every fact, and time-aware updates. A person may leave a team, a service may be renamed, a policy may change, and the graph must represent that evolution without losing context. This is why organizational memory is a graph of graphs: each subgraph can model a domain — people, systems, workflows, incidents, knowledge artifacts — while the whole system preserves cross-domain relationships and causal structure.",
+      },
+      {
+        type: "insight",
+        text: "An organization is not just a set of records. It is a memory network: people own decisions, teams coordinate workflows, systems depend on services, artifacts accumulate context, and the graph reveals the causal structure behind operational reality. For software teams, that means OMG is both a knowledge platform and a runtime substrate for reasoning, automation, and AI-powered decision support.",
+      },
+    ],
+  },
+    // ─── Pass 2 additions ──────────────────────────────────────────────────
+  {
+    n: 37,
+    part: 2,
+    title: "Minimum Spanning Trees",
+    tagline: "Kruskal, Prim, Borůvka — connecting everything for the least cost",
+    insight:
+      "An MST is the cheapest way to keep a graph connected. It is the backbone of network design, clustering, and approximation algorithms.",
+    content: [
+      {
+        type: "p",
+        text: "A spanning tree of a connected graph is a subgraph that touches every vertex with exactly V−1 edges and no cycles. A minimum spanning tree (MST) is the spanning tree of least total weight. MSTs are the single most-used graph algorithm in networking — laying cable, provisioning circuits, and clustering points all reduce to it.",
+      },
+      {
+        type: "code",
+        text: `Kruskal:
+  edges = sort(edges by weight)
+  uf = UnionFind(V)
+  mst = []
+  for (u, v, w) in edges:
+    if uf.find(u) != uf.find(v):
+      uf.union(u, v)
+      mst.append((u, v, w))
+  return mst
+
+Prim:
+  dist[start] = 0
+  heap = [(0, start)]
+  while heap:
+    d, u = heappop(heap)
+    if visited[u]: continue
+    visited[u] = true
+    for (v, w) in u.edges:
+      if not visited[v] and w < dist[v]:
+        dist[v] = w
+        heappush(heap, (w, v))`,
+      },
+      {
+        type: "table",
+        head: ["Algorithm", "Approach", "Time", "Best When"],
+        rows: [
+          ["Kruskal", "Sort edges + union-find", "O(E log E)", "Sparse graphs, edge list available"],
+          ["Prim", "Grow tree with priority queue", "O((V+E) log V)", "Dense graphs, adjacency available"],
+          ["Borůvka", "Merge components in parallel rounds", "O(E log V)", "Parallel / distributed settings"],
+          ["Cut property", "Any lightest edge across a cut is safe", "—", "Correctness proof for all three"],
+        ],
+      },
+      {
+        type: "insight",
+        text: "Kruskal is greedy on edges; Prim is greedy on vertices; Borůvka is greedy in parallel. All three are correct because of the cut property: the lightest edge crossing any cut belongs to some MST. This is the cleanest example of a matroid-greedy algorithm in computer science.",
+      },
+      {
+        type: "p",
+        text: "Applications: network design (telecom, power grids), single-linkage clustering (cut the longest MST edges to form clusters), approximation for the travelling salesman problem (2-approximation via MST + shortcutting), and image segmentation (MST on pixel-similarity graphs).",
+      },
+    ],
+  },
+  {
+    n: 38,
+    part: 2,
+    title: "Strongly Connected Components",
+    tagline: "Tarjan and Kosaraju — collapsing cycles into supernodes",
+    insight:
+      "Every directed graph is a DAG of its strongly connected components. Condensing SCCs is how you reason about cyclic systems.",
+    content: [
+      {
+        type: "p",
+        text: "In a directed graph, two vertices are strongly connected if each is reachable from the other. A strongly connected component (SCC) is a maximal such set. Every directed graph decomposes uniquely into SCCs, and the condensation — replacing each SCC with a supernode — is a DAG. This is the single most important structural decomposition of directed graphs.",
+      },
+      {
+        type: "code",
+        text: `Kosaraju (two-pass DFS):
+  1. DFS on G, record finish order
+  2. Reverse G
+  3. DFS on G^R in reverse finish order
+  4. Each DFS tree is one SCC
+
+Tarjan (single-pass DFS):
+  low[u] = min(disc[u],
+               disc[w] for w in back-edges,
+               low[w] for w in tree-edges)
+  When low[u] == disc[u], pop stack → SCC`,
+      },
+      {
+        type: "table",
+        head: ["Algorithm", "Passes", "Time", "Notes"],
+        rows: [
+          ["Kosaraju", "2 DFS + reverse", "O(V + E)", "Simplest to prove correct"],
+          ["Tarjan", "1 DFS + stack", "O(V + E)", "Single pass, widely used"],
+          ["Gabow", "1 DFS + 2 stacks", "O(V + E)", "Avoids low-link bookkeeping"],
+          ["Path-based", "1 DFS", "O(V + E)", "Good for incremental updates"],
+        ],
+      },
+      {
+        type: "insight",
+        text: "The condensation of any directed graph is a DAG. This is why build systems, package managers, and dependency resolvers can work at all: after condensing cycles into supernodes (which become 'groups that must be resolved together'), the problem becomes topological sort on a DAG.",
+      },
+      {
+        type: "p",
+        text: "Applications: detecting cyclic dependencies in package managers (npm, cargo), analyzing call graphs in compilers, verifying deadlock freedom in concurrent systems, decomposing 2-SAT problems, and identifying clusters in directed social networks.",
+      },
+    ],
+  },
+  {
+    n: 39,
+    part: 2,
+    title: "Topological Sort",
+    tagline: "Linearizing a DAG so every dependency comes first",
+    insight:
+      "If a graph is a DAG, you can always order its vertices so every edge points forward. That order is the schedule.",
+    content: [
+      {
+        type: "p",
+        text: "A topological sort of a directed acyclic graph is a linear ordering of vertices such that for every edge u → v, u appears before v. Every DAG has at least one topological sort; a graph with a cycle has none. Topological sort is the algorithm behind every scheduler that respects dependencies: build systems, task runners, course prerequisites, spreadsheet recalculation, and machine-learning pipeline orchestration.",
+      },
+      {
+        type: "code",
+        text: `Kahn (BFS, in-degree based):
+  indeg[v] = number of incoming edges
+  queue = [v for v in V if indeg[v] == 0]
+  order = []
+  while queue:
+    u = queue.pop()
+    order.append(u)
+    for v in u.out_neighbors:
+      indeg[v] -= 1
+      if indeg[v] == 0:
+        queue.append(v)
+  if len(order) != |V|: cycle exists
+
+DFS-based:
+  post-order DFS, then reverse the output`,
+      },
+      {
+        type: "table",
+        head: ["Method", "Detects Cycles", "Produces", "Best When"],
+        rows: [
+          ["Kahn (BFS)", "Yes (incomplete order)", "Lexicographically controllable order", "Scheduling with priorities"],
+          ["DFS post-order reversed", "Yes (back-edge)", "Any valid order", "When DFS already needed"],
+          ["Parallel Kahn", "Yes", "Level-by-level waves", "Distributed execution"],
+        ],
+      },
+      {
+        type: "insight",
+        text: "Topological sort and cycle detection are the same algorithm. Kahn's method produces a valid order iff the graph is acyclic; if it terminates early, the remaining vertices form cycles. This duality is why build tools can both schedule work and report circular dependencies from one pass.",
+      },
+      {
+        type: "p",
+        text: "Applications: Make/Bazel/Ninja build scheduling, Airflow/Prefect DAG execution, package manager install order, compiler instruction scheduling, course prerequisite planning, spreadsheet cell evaluation, and neural network computation graph execution.",
+      },
+    ],
+  },
+  {
+    n: 40,
+    part: 2,
+    title: "Max-Flow / Min-Cut",
+    tagline: "Ford–Fulkerson, Edmonds–Karp, push–relabel — the backbone of matching and scheduling",
+    insight:
+      "The max-flow min-cut theorem is one of the deepest results in combinatorial optimization: the largest flow equals the smallest cut.",
+    content: [
+      {
+        type: "p",
+        text: "In a flow network — a directed graph with capacities on edges, a source s, and a sink t — the maximum flow from s to t equals the minimum capacity of an s–t cut. This duality (the max-flow min-cut theorem) reduces dozens of combinatorial problems to flow: bipartite matching, project scheduling, image segmentation, and network reliability.",
+      },
+      {
+        type: "code",
+        text: `Ford–Fulkerson (conceptual):
+  while there exists an augmenting path P in residual G_f:
+    push min residual capacity along P
+
+Edmonds–Karp (BFS augmentation):
+  O(V E^2)
+
+Dinic (level graph + blocking flow):
+  O(V^2 E) — fast in practice
+
+Push–relabel (preflow + discharge):
+  O(V^2 sqrt(E)) — strong for dense graphs`,
+      },
+      {
+        type: "table",
+        head: ["Algorithm", "Time", "Idea"],
+        rows: [
+          ["Ford–Fulkerson", "O(E · maxflow)", "Augment along any path"],
+          ["Edmonds–Karp", "O(V E²)", "Augment along shortest (BFS) path"],
+          ["Dinic", "O(V² E)", "Level graph + blocking flow"],
+          ["Push–relabel", "O(V² √E)", "Local preflow operations"],
+          ["Boykov–Kolmogorov", "Fast in practice", "Graph cuts for vision"],
+        ],
+      },
+      {
+        type: "insight",
+        text: "Bipartite maximum matching is max-flow on a unit-capacity network. This is why Hopcroft–Karp (matching) and Dinic (flow) have the same complexity: they are the same algorithm specialized to two different problems. The flow view generalizes to weighted matching, assignment, and scheduling with capacities.",
+      },
+      {
+        type: "p",
+        text: "Applications: bipartite matching (job assignment, ad allocation, dating), image segmentation (Boykov–Kolmogorov graph cuts), project selection (closure problem), network reliability (min-cut = bottleneck), and multi-commodity scheduling.",
+      },
+    ],
+  },
+  {
+    n: 41,
+    part: 12,
+    title: "Spectral Graph Theory",
+    tagline: "Eigenvalues of the Laplacian — the algebra behind clustering and GNNs",
+    insight:
+      "The eigenvectors of the graph Laplacian reveal the graph's structure: the Fiedler vector cuts it, and its spectrum controls diffusion.",
+    content: [
+      {
+        type: "p",
+        text: "Spectral graph theory studies graphs through the eigenvalues and eigenvectors of their adjacency and Laplacian matrices. It is the theoretical backbone of spectral clustering, Cheeger's inequality, expander graphs, and — crucially — modern GNNs: a GCN layer is a low-pass filter on the graph Laplacian, and graph transformers use Laplacian eigenvectors as positional encodings.",
+      },
+      {
+        type: "code",
+        text: `Combinatorial Laplacian: L = D − A
+Normalized Laplacian:    L_sym = I − D^(-1/2) A D^(-1/2)
+
+Properties:
+  L is symmetric positive semi-definite
+  eigenvalues: 0 = λ1 ≤ λ2 ≤ ... ≤ λn
+  number of zero eigenvalues = number of connected components
+  λ2 (Fiedler value) = algebraic connectivity
+  eigenvector of λ2 (Fiedler vector) ≈ best graph cut`,
+      },
+      {
+        type: "table",
+        head: ["Object", "Definition", "Meaning"],
+        rows: [
+          ["Adjacency A", "A[i][j] = 1 if edge", "Raw connectivity"],
+          ["Degree D", "D[i][i] = degree(i)", "Normalization"],
+          ["Laplacian L", "L = D − A", "Diffusion operator"],
+          ["Fiedler value λ₂", "Second-smallest eigenvalue", "Algebraic connectivity"],
+          ["Fiedler vector", "Eigenvector of λ₂", "Best spectral bipartition"],
+          ["Cheeger constant h(G)", "Min cut / min volume", "Bottleneck-ness (h²/2 ≤ λ₂ ≤ 2h)"],
+        ],
+      },
+      {
+        type: "insight",
+        text: "GCN is a polynomial filter on the Laplacian. Spectral clustering is k-means on the first k non-trivial eigenvectors. Cheeger's inequality bounds the best cut by √λ₂. If you understand the Laplacian spectrum, you understand why half of graph ML works.",
+      },
+      {
+        type: "p",
+        text: "Applications: spectral clustering, image segmentation (normalized cuts), community detection (spectral modularity), expander construction, graph signal processing, and the theoretical justification for GCN, ChebNet, and graph transformers.",
+      },
+    ],
+  },
+  {
+    n: 42,
+    part: 12,
+    title: "Random Graph Models",
+    tagline: "Erdős–Rényi, Barabási–Albert, Watts–Strogatz, stochastic block models",
+    insight:
+      "Real graphs are not random — they are scale-free, small-world, and clustered. Each property is captured by a different random model.",
+    content: [
+      {
+        type: "p",
+        text: "To say 'real-world graphs are scale-free and small-world' is meaningless without a null model to compare against. Random graph theory provides those null models: each captures one structural property, and deviations from it reveal what is actually interesting about a real graph.",
+      },
+      {
+        type: "table",
+        head: ["Model", "Rule", "Captures", "Degree Distribution"],
+        rows: [
+          ["Erdős–Rényi G(n,p)", "Each edge present with prob p", "Baseline randomness", "Poisson (thin tail)"],
+          ["Barabási–Albert", "Preferential attachment", "Scale-free / power law", "Power law (fat tail)"],
+          ["Watts–Strogatz", "Ring + random rewiring", "Small-world + clustering", "Narrow, high clustering"],
+          ["Stochastic block model", "Communities with edge probs", "Community structure", "Block-dependent"],
+          ["Configuration model", "Prescribed degree sequence", "Degree-sequence null", "As specified"],
+          ["Kronecker graph", "Recursive self-similarity", "Realistic full spectrum", "Heavy-tailed"],
+        ],
+      },
+      {
+        type: "code",
+        text: `Erdős–Rényi G(n, p):
+  edge (i, j) present with prob p
+  giant component emerges at p = 1/n
+  average degree = (n-1) p
+
+Barabási–Albert (preferential attachment):
+  start with m0 nodes
+  each new node connects to m existing nodes
+    with probability proportional to degree
+  → power-law degree distribution P(k) ~ k^(-3)`,
+      },
+      {
+        type: "insight",
+        text: "The phase transition in Erdős–Rényi at p = 1/n — where a giant component suddenly appears — is one of the most important phenomena in network science. It is the graph-theoretic analogue of a physical phase transition, and it explains why random graph theory is not just a null model but a theory of emergence.",
+      },
+      {
+        type: "p",
+        text: "Applications: null-model hypothesis testing for real networks, understanding epidemic thresholds (SIR on networks), evaluating community detection (SBM as ground truth), simulating realistic graphs for benchmarks, and analyzing robustness to random vs. targeted failure.",
+      },
+    ],
+  },
+  {
+    n: 43,
+    part: 12,
+    title: "Graph Homomorphism",
+    tagline: "Isomorphism, subgraph isomorphism, simulation — the unifying abstraction",
+    insight:
+      "Pattern matching, message passing, query evaluation, and type checking are all homomorphism problems. This is the concept that unifies the field.",
+    content: [
+      {
+        type: "p",
+        text: "A graph homomorphism from G to H is a map f: V(G) → V(H) that preserves edges: if (u, v) is an edge in G, then (f(u), f(v)) is an edge in H. Every pattern-matching problem in graph engineering is a homomorphism problem in disguise: Cypher's MATCH, SPARQL's basic graph pattern, Datalog rule evaluation, GNN message passing, and type checking all reduce to finding homomorphisms.",
+      },
+      {
+        type: "code",
+        text: `Homomorphism:
+  f: V(G) → V(H) such that (u,v) ∈ E(G) ⇒ (f(u), f(v)) ∈ E(H)
+  Also called "H-coloring" or "G → H"
+
+Special cases:
+  Isomorphism:      bijective homomorphism with inverse homomorphism
+  Subgraph iso:     injective homomorphism (G embeds in H)
+  Induced subgraph: injective homomorphism + non-edges preserved
+  Simulation:       homomorphism that also preserves non-edges on a relation
+  Bisimulation:     simulation both ways
+
+Complexity (fixed H):
+  H bipartite → H-coloring in P
+  H non-bipartite → H-coloring NP-complete`,
+      },
+      {
+        type: "table",
+        head: ["Notion", "Preserves", "Complexity", "Where It Appears"],
+        rows: [
+          ["Homomorphism", "Edges", "NP-hard in general", "CSP, conjunctive queries"],
+          ["Isomorphism", "Edges + bijection", "GI (quasi-polynomial)", "Graph matching, chemistry"],
+          ["Subgraph isomorphism", "Edges + injective", "NP-complete", "Pattern matching, Cypher"],
+          ["Simulation", "Edges + non-edges", "PTIME", "Concurrency, verification"],
+          ["Bisimulation", "Simulation both ways", "PTIME", "Process algebra, model checking"],
+        ],
+      },
+      {
+        type: "insight",
+        text: "Graph homomorphism is the single concept that unifies: query languages (Cypher/SPARQL evaluation = homomorphism search), knowledge graph reasoning (ontology entailment = homomorphism closure), GNNs (message passing = local homomorphism approximation), and compiler type checking (subtyping = homomorphism on type graphs). Learn it once, apply it everywhere.",
+      },
+      {
+        type: "p",
+        text: "The Feder–Vardi dichotomy theorem (1998) classifies all constraint satisfaction problems — a generalization of homomorphism — as either polynomial-time or NP-complete, based on the structure of the target graph. This is one of the deepest classification results in theoretical computer science.",
+      },
+    ],
+  },
 ];
 
 // ── Quizzes ───────────────────────────────────────────────────────────────
@@ -1441,6 +1864,188 @@ const QUIZZES = {
       exp: "When a value can arrive from multiple predecessors, a phi node merges them into a single SSA variable. This makes control-flow merges explicit and analyzable.",
     },
   ],
+  36: [
+    {
+      q: "What is the core idea behind OMG?",
+      opts: [
+        "A graph that stores only user profiles",
+        "A graph-of-graphs that represents how an organization knows, decides, and operates",
+        "A visualization for database schemas",
+        "A type of neural network architecture",
+      ],
+      ans: 1,
+      exp: "OMG stands for Organizational Memory Graph: a graph-of-graphs that captures people, projects, decisions, systems, workflows, and knowledge so the organization can reason over its own memory.",
+    },
+    {
+      q: "What is the role of OMGQL and OMGQE together?",
+      opts: [
+        "They replace the database altogether",
+        "OMGQL describes the query and OMGQE executes it over the graph",
+        "OMGQL is a frontend Only and OMGQE is a parser",
+        "They are both used only for visualization",
+      ],
+      ans: 1,
+      exp: "OMGQL provides the language for expressing graph patterns and intent, while OMGQE executes those patterns against the organizational memory graph to retrieve and analyze the relevant subgraph.",
+    },
+  ],
+    37: [
+    {
+      q: "What is the cut property that makes all MST algorithms correct?",
+      opts: [
+        "The heaviest edge in any cycle is never in an MST",
+        "The lightest edge crossing any cut belongs to some MST",
+        "The MST always contains the shortest edge at each vertex",
+        "The MST is unique for every graph",
+      ],
+      ans: 1,
+      exp: "The cut property states that for any cut of the graph, the lightest edge crossing it is safe to add. Kruskal, Prim, and Borůvka are all greedy algorithms that respect this property, which is why all three are correct.",
+    },
+    {
+      q: "Which MST algorithm is best suited to parallel or distributed computation?",
+      opts: ["Kruskal", "Prim", "Borůvka", "Dijkstra"],
+      ans: 2,
+      exp: "Borůvka's algorithm works in rounds: each component simultaneously selects its lightest outgoing edge and merges. Because components operate independently within a round, it parallelizes naturally — this is why it underlies distributed MST algorithms like GHS.",
+    },
+  ],
+  38: [
+    {
+      q: "What is the condensation of a directed graph?",
+      opts: [
+        "The graph with all edges removed",
+        "The DAG obtained by replacing each SCC with a supernode",
+        "The minimum spanning tree of the graph",
+        "The graph of all shortest paths",
+      ],
+      ans: 1,
+      exp: "Every directed graph decomposes uniquely into strongly connected components. Replacing each SCC with a single supernode produces a DAG — the condensation — which is the cleanest way to reason about cyclic dependency structures.",
+    },
+    {
+      q: "Why are SCC algorithms essential for package managers?",
+      opts: [
+        "They make downloads faster",
+        "They detect cyclic dependencies and group mutually-dependent packages",
+        "They compress package size",
+        "They encrypt package metadata",
+      ],
+      ans: 1,
+      exp: "Package managers build a dependency graph and need to (a) detect cycles (which are errors) and (b) install in topological order. SCC algorithms surface cycles directly: a component with more than one vertex is a cyclic dependency that must be reported or broken.",
+    },
+  ],
+  39: [
+    {
+      q: "What does a topological sort require of the input graph?",
+      opts: [
+        "It must be connected",
+        "It must be acyclic",
+        "It must be undirected",
+        "It must be weighted",
+      ],
+      ans: 1,
+      exp: "A topological sort exists if and only if the graph is a DAG (directed acyclic graph). If any cycle exists, no linear ordering can place every edge forward — this is why topological sort and cycle detection are the same algorithm.",
+    },
+    {
+      q: "In Kahn's algorithm, what does it mean if the output is shorter than the vertex count?",
+      opts: [
+        "The graph is disconnected",
+        "The graph contains at least one cycle",
+        "The graph is a tree",
+        "The graph is bipartite",
+      ],
+      ans: 1,
+      exp: "Kahn's algorithm removes vertices with in-degree zero. If some vertices never reach in-degree zero, they are part of a cycle (or reachable only through a cycle). An incomplete output is a cycle-detection signal.",
+    },
+  ],
+  40: [
+    {
+      q: "The max-flow min-cut theorem states that:",
+      opts: [
+        "The maximum flow equals the minimum cut capacity",
+        "The maximum flow equals the shortest path",
+        "The minimum cut equals the MST weight",
+        "Flow is conserved only at the source",
+      ],
+      ans: 0,
+      exp: "The max-flow min-cut theorem (Ford–Fulkerson, 1956) says the maximum amount of flow that can be sent from source to sink equals the minimum capacity of any s–t cut. This duality is the foundation of a huge class of combinatorial algorithms.",
+    },
+    {
+      q: "How does bipartite maximum matching reduce to max-flow?",
+      opts: [
+        "By adding a super-source and super-sink with unit-capacity edges",
+        "By using Dijkstra instead",
+        "By computing an MST first",
+        "It cannot be reduced",
+      ],
+      ans: 0,
+      exp: "Build a network: super-source → left vertices (capacity 1), left → right for each edge (capacity 1), right → super-sink (capacity 1). Integer max-flow gives maximum matching. This is why Hopcroft–Karp and Dinic have the same complexity — they are the same algorithm specialized differently.",
+    },
+  ],
+  41: [
+    {
+      q: "What does the second-smallest eigenvalue of the Laplacian (λ₂) measure?",
+      opts: [
+        "The number of triangles",
+        "The algebraic connectivity of the graph",
+        "The maximum degree",
+        "The number of spanning trees",
+      ],
+      ans: 1,
+      exp: "λ₂, the Fiedler value, is zero if and only if the graph is disconnected and small when the graph has a bottleneck. Its eigenvector (the Fiedler vector) gives the best spectral bipartition. This is the mathematical basis of spectral clustering.",
+    },
+    {
+      q: "Why is a GCN layer described as a low-pass filter?",
+      opts: [
+        "It removes high-frequency noise from image data",
+        "It smooths features across neighboring nodes, suppressing high-frequency graph signal components",
+        "It uses a small learning rate",
+        "It only propagates low-degree nodes",
+      ],
+      ans: 1,
+      exp: "A GCN layer aggregates neighbor features, which in the spectral domain is equivalent to applying a low-pass filter to the graph signal. Stacking many layers over-smooths because high-frequency components are repeatedly suppressed — this is the spectral view of the over-smoothing problem.",
+    },
+  ],
+  42: [
+    {
+      q: "What structural property does the Barabási–Albert model capture?",
+      opts: [
+        "Uniform random edges",
+        "Power-law degree distribution via preferential attachment",
+        "Small-world with high clustering",
+        "Bipartite structure",
+      ],
+      ans: 1,
+      exp: "Barabási–Albert uses preferential attachment: new nodes connect to existing nodes with probability proportional to their degree. This produces a power-law degree distribution — a few hubs with many connections, most nodes with few — which is why it is the canonical model of scale-free networks.",
+    },
+    {
+      q: "At what edge probability does a giant component emerge in Erdős–Rényi G(n, p)?",
+      opts: ["p = 1/n²", "p = 1/n", "p = 0.5", "p = log n / n"],
+      ans: 1,
+      exp: "The giant-component phase transition occurs at p = 1/n, corresponding to average degree 1. Below this threshold all components are small (O(log n)); above it a single component spans a constant fraction of vertices. This is a graph-theoretic phase transition.",
+    },
+  ],
+  43: [
+    {
+      q: "What is a graph homomorphism from G to H?",
+      opts: [
+        "A bijection preserving edges",
+        "A map f: V(G) → V(H) that preserves edges",
+        "A spanning tree of G",
+        "A path from G to H",
+      ],
+      ans: 1,
+      exp: "A homomorphism is any function from the vertices of G to the vertices of H that sends every edge of G to an edge of H. It does not require injectivity or surjectivity. Isomorphism is a special case (bijective homomorphism with homomorphic inverse).",
+    },
+    {
+      q: "Why is graph homomorphism called the unifying abstraction of graph engineering?",
+      opts: [
+        "It only appears in theoretical papers",
+        "Pattern matching, query evaluation, message passing, and type checking all reduce to homomorphism problems",
+        "It replaces all other algorithms",
+        "It only applies to bipartite graphs",
+      ],
+      ans: 1,
+      exp: "Cypher MATCH, SPARQL basic graph patterns, Datalog rule evaluation, GNN message passing, and compiler type checking are all, formally, homomorphism problems. Recognizing this lets you transfer techniques (and complexity bounds) across domains that otherwise look unrelated.",
+    },
+  ],
 };
 
 // ── Glossary ──────────────────────────────────────────────────────────────
@@ -1471,6 +2076,15 @@ const GLOSSARY = [
   { term: "Message Passing", def: "Core GNN operation: nodes exchange information with neighbors, aggregate, and update their representations.", ch: 16 },
   { term: "Modularity", def: "Metric measuring how well a partition separates a graph into communities. Louvain and Leiden maximize it.", ch: 8 },
   { term: "Node2Vec", def: "Graph embedding method using biased random walks and Skip-gram. Learns vectors where graph proximity = vector proximity.", ch: 15 },
+  { term: "OMG", def: "Organizational Memory Graph: a graph-of-graphs that stores organizational memory, dependencies, decisions, and relationships.", ch: 36 },
+  { term: "OMGAPI", def: "The API layer for reading and writing organizational memory from software systems, agents, and applications.", ch: 36 },
+  { term: "OMGCLI", def: "The command-line interface for graph operations, automation, scripting, and operator workflows.", ch: 36 },
+  { term: "OMGDB", def: "The persisted graph database for organizational facts, states, and connections.", ch: 36 },
+  { term: "OMGEX", def: "The graph explorer that lets teams navigate, inspect, and understand the organizational memory graph.", ch: 36 },
+  { term: "OMGQE", def: "The query engine that executes OMGQL patterns over the graph, including traversal, retrieval, and analytics.", ch: 36 },
+  { term: "OMGQL", def: "The domain-specific query language used to ask graph questions about teams, systems, workflows, and decisions.", ch: 36 },
+  { term: "OMGM", def: "The core graph model: typed entities, edges, properties, state, and lifecycle semantics.", ch: 36 },
+  { term: "OMGP", def: "The parser that converts OMGQL into an executable graph plan understood by the query engine.", ch: 36 },
   { term: "Ontology", def: "Formal specification of classes, properties, and inference rules for a knowledge graph. RDFS and OWL are standards.", ch: 14 },
   { term: "Over-smoothing", def: "GNN failure mode: after many layers, all node representations converge. Mitigated by skip connections and residual layers.", ch: 17 },
   { term: "PageRank", def: "Centrality measure based on random-walk stationary distribution. Nodes linked from important nodes rank higher. Powers web search.", ch: 7 },
@@ -1486,6 +2100,29 @@ const GLOSSARY = [
   { term: "Triple", def: "Knowledge graph fact: (subject, predicate, object). The atom of RDF and many knowledge graphs.", ch: 13 },
   { term: "Union-Find", def: "Disjoint-set data structure for connectivity queries. Near-constant time per operation with path compression + union by rank.", ch: 24 },
   { term: "Vertex-Centric", def: "Programming model for distributed graph processing: think like a vertex, exchange messages with neighbors.", ch: 23 },
+  { term: "Borůvka's Algorithm", def: "MST algorithm that works in parallel rounds: each component selects its lightest outgoing edge and merges. Foundation of distributed MST algorithms.", ch: 37 },
+  { term: "Barabási–Albert Model", def: "Random graph model using preferential attachment. Produces power-law degree distributions and is the canonical model of scale-free networks.", ch: 42 },
+  { term: "Cheeger Constant", def: "Minimum cut-to-volume ratio of a graph. Bounded by the Fiedler value: h²/2 ≤ λ₂ ≤ 2h. Measures how much of a bottleneck the graph has.", ch: 41 },
+  { term: "Condensation", def: "The DAG obtained by replacing each strongly connected component of a directed graph with a single supernode.", ch: 38 },
+  { term: "Edmonds–Karp", def: "Max-flow algorithm that augments along shortest (BFS) paths. O(V E²) time. First strongly polynomial max-flow algorithm.", ch: 40 },
+  { term: "Erdős–Rényi G(n,p)", def: "Random graph model where each edge is present independently with probability p. Exhibits a giant-component phase transition at p = 1/n.", ch: 42 },
+  { term: "Fiedler Vector", def: "Eigenvector of the second-smallest Laplacian eigenvalue. Gives the best spectral bipartition; basis of spectral clustering.", ch: 41 },
+  { term: "Graph Homomorphism", def: "A map f: V(G) → V(H) that preserves edges. Unifies pattern matching, query evaluation, message passing, and type checking.", ch: 43 },
+  { term: "Kahn's Algorithm", def: "BFS-based topological sort using in-degrees. Also detects cycles: if output is incomplete, the graph contains a cycle.", ch: 39 },
+  { term: "Kosaraju's Algorithm", def: "Two-pass DFS algorithm for strongly connected components. Simplest SCC algorithm to prove correct.", ch: 38 },
+  { term: "Kruskal's Algorithm", def: "MST algorithm: sort edges by weight, add each edge that doesn't create a cycle using union-find. O(E log E).", ch: 37 },
+  { term: "Laplacian Matrix", def: "L = D − A, where D is the degree matrix and A is the adjacency matrix. Its spectrum controls diffusion, clustering, and GNN behavior.", ch: 41 },
+  { term: "Max-Flow Min-Cut", def: "Theorem: the maximum s–t flow equals the minimum s–t cut capacity. Foundation of matching, scheduling, and segmentation algorithms.", ch: 40 },
+  { term: "Minimum Spanning Tree", def: "Spanning tree of least total weight. Computed by Kruskal, Prim, or Borůvka. Used in network design, clustering, and TSP approximation.", ch: 37 },
+  { term: "Prim's Algorithm", def: "MST algorithm: grow the tree from a start vertex using a priority queue. O((V+E) log V). Best for dense graphs.", ch: 37 },
+  { term: "Push–Relabel", def: "Max-flow algorithm using local preflow operations. O(V² √E). Strong for dense graphs.", ch: 40 },
+  { term: "Spectral Clustering", def: "Clustering by k-means on the first k non-trivial eigenvectors of the graph Laplacian. Justified by Cheeger's inequality.", ch: 41 },
+  { term: "Stochastic Block Model", def: "Random graph model with planted communities. Used as ground truth for evaluating community detection algorithms.", ch: 42 },
+  { term: "Strongly Connected Component", def: "Maximal set of vertices in a directed graph where each is reachable from every other. Computed by Tarjan or Kosaraju.", ch: 38 },
+  { term: "Subgraph Isomorphism", def: "Injective homomorphism from a pattern graph to a target graph. NP-complete in general; the formal basis of Cypher MATCH and SPARQL BGP.", ch: 43 },
+  { term: "Tarjan's Algorithm", def: "Single-pass DFS algorithm for strongly connected components using a stack and low-link values. O(V + E).", ch: 38 },
+  { term: "Topological Sort", def: "Linear ordering of a DAG's vertices such that every edge points forward. Computed by Kahn's algorithm or reversed DFS post-order.", ch: 39 },
+  { term: "Watts–Strogatz Model", def: "Random graph model with a ring lattice plus random rewiring. Captures small-world structure and high clustering simultaneously.", ch: 42 },
 ];
 
 // ── Knowledge Graph ───────────────────────────────────────────────────────
@@ -1518,6 +2155,15 @@ const EDGES = [
   [29, 30], [29, 31],
   [30, 31],
   [0, 32], [20, 32], [32, 33], [33, 34], [34, 35],
+    // ─── Pass 2 additions ──────────────────────────────────────────────────
+  [2, 37], [4, 37], [6, 37], [23, 37],           // MST ↔ foundations & shortest paths
+  [2, 38], [5, 38], [32, 38], [33, 38],           // SCC ↔ traversal & compiler
+  [4, 39], [32, 39], [37, 39], [38, 39],          // Topo sort ↔ DAG, compiler, SCC
+  [6, 40], [9, 40], [21, 40], [38, 40],           // Max-flow ↔ shortest path, matching
+  [15, 41], [16, 41], [17, 41], [27, 41], [8, 41],// Spectral ↔ embeddings, GNN, transformers
+  [3, 42], [4, 42], [8, 42], [24, 42],            // Random models ↔ properties, communities
+  [1, 43], [11, 43], [14, 43], [16, 43], [34, 43],// Homomorphism ↔ foundations, query, KG, GNN, DDG
+  [41, 42], [42, 43], [41, 43],                   // Theory foundations internal
 ];
 
 const NODE_POS = (() => {
@@ -2795,7 +3441,7 @@ function Sidebar({
           <span style={{ fontSize: 18 }}>🕸️</span>
           <div style={{ color: T.text, fontWeight: 800, fontSize: 15 }}>Graph Engineering</div>
         </div>
-        <div style={{ color: T.muted, fontSize: 11, marginLeft: 26 }}>10 Parts · 32 Chapters</div>
+        <div style={{ color: T.muted, fontSize: 11, marginLeft: 26 }}>{PARTS.length} Parts · {CHAPTERS.length} Chapters</div>
       </div>
       <div style={{ padding: "8px", borderBottom: `1px solid ${T.border}`, display: "flex", gap: 4 }}>
         {[{ id: "home", icon: "🏠" }, { id: "map", icon: "🕸️" }, { id: "glossary", icon: "📖" }].map((v) => (
@@ -2930,9 +3576,9 @@ function Overview({
           background: "linear-gradient(135deg,#F0F6FF 30%,#22D3EE)",
           WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", lineHeight: 1.2,
         }}>Graph Engineering</h1>
-        <p style={{ color: T.muted, fontSize: 15, margin: "0 0 24px" }}>
-          10 Parts · 32 Chapters · From Nodes and Edges to Graph-Native AI
-        </p>
+       <p style={{ color: T.muted, fontSize: 15, margin: "0 0 24px" }}>
+  {PARTS.length} Parts · {CHAPTERS.length} Chapters · From Nodes and Edges to Graph-Native AI
+</p>
         <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
           {[
             { icon: "🕸️", label: "Concept Map", action: () => setView("map") },
@@ -2949,7 +3595,7 @@ function Overview({
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 10, marginBottom: 20 }}>
         {[
           { n: CHAPTERS.length, label: "Chapters" },
-          { n: 10, label: "Parts" },
+          { n: PARTS.length, label: "Parts" },
           { n: Object.keys(QUIZZES).length, label: "Quizzes" },
           { n: GLOSSARY.length, label: "Terms" },
         ].map((s) => (
