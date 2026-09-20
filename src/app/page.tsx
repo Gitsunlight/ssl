@@ -359,7 +359,7 @@ export default function Home() {
           </div>
 
           <h1 className="hero-title" style={{ fontSize: 48, fontWeight: 900, margin: "0 0 12px", lineHeight: 1.1 }}>
-            Technical Curriculums
+            Curriculum Catlog
           </h1>
           <p
             style={{
