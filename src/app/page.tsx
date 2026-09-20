@@ -266,40 +266,12 @@ export default function Home() {
   }, []);
 
   return (
-    <div style={{ background: T.bg, color: T.text, minHeight: "100vh" }}>
+    <div className="page-shell" style={{ background: T.bg, color: T.text, minHeight: "100vh" }}>
       {/* ── Hero Section ── */}
-      <section
-        style={{
-          padding: "60px 20px 40px",
-          textAlign: "center",
-          position: "relative",
-          overflow: "hidden",
-          borderBottom: `1px solid ${T.border}`,
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "radial-gradient(ellipse at 50% 0%, #22D3EE08 0%, transparent 70%)",
-            pointerEvents: "none",
-          }}
-        />
-        <div style={{ maxWidth: 820, margin: "0 auto", position: "relative" }}>
+      <section className="catalog-hero" style={{ borderBottom: `1px solid ${T.border}` }}>
+        <div className="hero-inner">
           {/* Logo / Badge */}
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 12,
-              padding: "8px 20px",
-              borderRadius: 40,
-              background: T.elevated,
-              border: `1px solid ${T.border}`,
-              marginBottom: 24,
-            }}
-          >
+          <div className="catalog-badge" style={{ background: T.elevated, border: `1px solid ${T.border}` }}>
             <span style={{ fontSize: 20 }}>☀️</span>
             <span style={{ color: T.text, fontWeight: 700, fontSize: 14 }}>
               Sunlight Academy
@@ -318,18 +290,7 @@ export default function Home() {
             </span>
           </div>
 
-          <h1
-            style={{
-              fontSize: 48,
-              fontWeight: 900,
-              margin: "0 0 12px",
-              lineHeight: 1.1,
-              background:
-                "linear-gradient(135deg, #F0F6FF 30%, #22D3EE 60%, #A78BFA)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-          >
+          <h1 className="hero-title" style={{ fontSize: 48, fontWeight: 900, margin: "0 0 12px", lineHeight: 1.1 }}>
             Technical Curriculums
           </h1>
           <p
@@ -349,31 +310,16 @@ export default function Home() {
           </p>
 
           {/* Search and Filter */}
-          <div
-            style={{
-              display: "flex",
-              gap: 10,
-              maxWidth: 600,
-              margin: "0 auto",
-              flexWrap: "wrap",
-              justifyContent: "center",
-            }}
-          >
+          <div className="search-shell">
             <input
+              className="search-input"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search curriculums, topics, tags…"
               style={{
-                flex: 1,
-                minWidth: 200,
-                padding: "12px 18px",
-                borderRadius: 12,
                 background: T.surface,
                 border: `1px solid ${T.border}`,
                 color: T.text,
-                fontSize: 14,
-                outline: "none",
-                transition: "all .2s",
               }}
               onFocus={(e) => {
                 e.target.style.borderColor = T.accent;
@@ -385,15 +331,7 @@ export default function Home() {
           </div>
 
           {/* Tag filters */}
-          <div
-            style={{
-              display: "flex",
-              gap: 6,
-              flexWrap: "wrap",
-              justifyContent: "center",
-              marginTop: 12,
-            }}
-          >
+          <div className="tag-filter" style={{ marginTop: 12 }}>
             <button
               onClick={() => setSelectedTag(null)}
               style={{
@@ -434,20 +372,7 @@ export default function Home() {
       </section>
 
       {/* ── Stats Bar ── */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
-          gap: 1,
-          background: T.border,
-          maxWidth: 900,
-          margin: "0 auto",
-          borderRadius: 12,
-          overflow: "hidden",
-          marginTop: -1,
-          marginBottom: 40,
-        }}
-      >
+      <div className="stats-bar" style={{ background: T.border, maxWidth: 900, margin: "0 auto", borderRadius: 12, overflow: "hidden", marginTop: -1, marginBottom: 40 }}>
         {[
           { label: "Curriculums", value: CURRICULUMS.length },
           { label: "Chapters", value: totalChapters },
@@ -455,14 +380,7 @@ export default function Home() {
           { label: "Quizzes", value: totalQuizzes },
           { label: "Terms", value: totalTerms },
         ].map((stat) => (
-          <div
-            key={stat.label}
-            style={{
-              background: T.surface,
-              padding: "16px 8px",
-              textAlign: "center",
-            }}
-          >
+          <div key={stat.label} className="stat-block" style={{ background: T.surface }}>
             <div style={{ color: T.accent, fontSize: 20, fontWeight: 900 }}>
               {stat.value}
             </div>
@@ -474,15 +392,8 @@ export default function Home() {
       </div>
 
       {/* ── Featured Curriculums ── */}
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px 40px" }}>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 10,
-            marginBottom: 20,
-          }}
-        >
+      <div className="catalog-section" style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px 40px" }}>
+        <div className="catalog-section-header" style={{ marginBottom: 20 }}>
           <span style={{ fontSize: 20 }}>⭐</span>
           <h2
             style={{
@@ -497,13 +408,7 @@ export default function Home() {
           <div style={{ flex: 1, height: 1, background: T.border }} />
         </div>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-            gap: 16,
-          }}
-        >
+        <div className="catalog-grid">
           {featured.map((c) => (
             <CurriculumCard key={c.id} curriculum={c} />
           ))}
@@ -511,15 +416,8 @@ export default function Home() {
       </div>
 
       {/* ── All Curriculums ── */}
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px 60px" }}>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 10,
-            marginBottom: 20,
-          }}
-        >
+      <div className="catalog-section all-curriculums" style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px 60px" }}>
+        <div className="catalog-section-header" style={{ marginBottom: 20 }}>
           <span style={{ fontSize: 20 }}>📚</span>
           <h2
             style={{
@@ -566,13 +464,7 @@ export default function Home() {
           </div>
         ) : (
           <>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-                gap: 16,
-              }}
-            >
+            <div className="catalog-grid">
               {displayedRegular.map((c) => (
                 <CurriculumCard key={c.id} curriculum={c} />
               ))}
@@ -612,18 +504,8 @@ export default function Home() {
       </div>
 
       {/* ── Request Banner ── */}
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px 40px" }}>
-        <div
-          style={{
-            background:
-              "linear-gradient(135deg, rgba(34, 211, 238, 0.14), rgba(167, 139, 250, 0.14))",
-            border: `1px solid ${T.border}`,
-            borderRadius: 20,
-            padding: "32px 24px",
-            textAlign: "center",
-            boxShadow: `0 20px 60px rgba(34, 211, 238, 0.08)`,
-          }}
-        >
+      <div className="request-banner">
+        <div className="request-banner-card" style={{ background: "linear-gradient(135deg, rgba(34, 211, 238, 0.14), rgba(167, 139, 250, 0.14))", border: `1px solid ${T.border}` }}>
           <div
             style={{
               fontSize: 28,
@@ -663,13 +545,7 @@ export default function Home() {
       </div>
 
       {/* ── Footer ── */}
-      <footer
-        style={{
-          padding: "32px 20px",
-          borderTop: `1px solid ${T.border}`,
-          textAlign: "center",
-        }}
-      >
+      <footer className="site-footer" style={{ borderTop: `1px solid ${T.border}` }}>
         <div
           style={{
             display: "flex",
@@ -707,20 +583,16 @@ function CurriculumCard({
   return (
     <a
       href={curriculum.path}
+      className="catalog-card-link"
       style={{ textDecoration: "none", display: "block" }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <div
+        className="catalog-card"
         style={{
-          padding: "20px 22px",
-          borderRadius: 14,
           background: T.surface,
           border: `1px solid ${isHovered ? curriculum.color : T.border}`,
-          transition: "all .25s",
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
           transform: isHovered ? "translateY(-4px)" : "none",
           boxShadow: isHovered ? `0 8px 32px ${curriculum.color}08` : "none",
         }}
@@ -791,14 +663,7 @@ function CurriculumCard({
         </p>
 
         {/* Tags */}
-        <div
-          style={{
-            display: "flex",
-            gap: 4,
-            flexWrap: "wrap",
-            marginBottom: 12,
-          }}
-        >
+        <div className="catalog-card-tag-cloud">
           {curriculum.tags.slice(0, 4).map((tag) => (
             <span
               key={tag}
@@ -828,17 +693,7 @@ function CurriculumCard({
         </div>
 
         {/* Meta info */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 12,
-            paddingTop: 12,
-            borderTop: `1px solid ${T.border}`,
-            color: T.muted,
-            fontSize: 11,
-          }}
-        >
+        <div className="catalog-card-meta" style={{ borderTop: `1px solid ${T.border}`, color: T.muted }}>
           <span>{curriculum.chapters} chapters</span>
           <span>•</span>
           <span>{curriculum.parts} parts</span>

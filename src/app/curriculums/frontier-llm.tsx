@@ -3371,6 +3371,7 @@ function Sidebar({
   quizScores,
   search,
   setSearch,
+  mobile,
 }: {
   view: string;
   setView: (v: string) => void;
@@ -3380,6 +3381,7 @@ function Sidebar({
   quizScores: Record<number, { score: number; total: number }>;
   search: string;
   setSearch: (s: string) => void;
+  mobile: boolean;
 }) {
   const [expanded, setExpanded] = useState(new Set([0, 1, 2, 3]));
   const toggle = (id: number) =>
@@ -3394,14 +3396,16 @@ function Sidebar({
   return (
     <div
       style={{
-        width: 270,
+        width: mobile ? "100%" : 270,
         background: T.surface,
-        borderRight: `1px solid ${T.border}`,
-        height: "100vh",
-        overflowY: "auto",
+        borderRight: mobile ? "none" : `1px solid ${T.border}`,
+        borderBottom: mobile ? `1px solid ${T.border}` : "none",
+        height: mobile ? "auto" : "100vh",
+        overflowY: mobile ? "visible" : "auto",
         flexShrink: 0,
         display: "flex",
         flexDirection: "column",
+        maxHeight: mobile ? "none" : "100vh",
       }}
     >
       <div
@@ -3420,59 +3424,133 @@ function Sidebar({
           12 Parts · 41 Chapters
         </div>
       </div>
-      <div
-        style={{
-          padding: "8px",
-          borderBottom: `1px solid ${T.border}`,
-          display: "flex",
-          gap: 4,
-        }}
-      >
-        {[
-          { id: "home", icon: "🏠" },
-          { id: "map", icon: "🕸️" },
-          { id: "glossary", icon: "📖" },
-        ].map((v) => (
-          <button
-            key={v.id}
-            onClick={() => setView(v.id)}
-            style={{
-              flex: 1,
-              padding: "8px 4px",
-              borderRadius: 8,
-              border: "none",
-              background: view === v.id ? T.elevated : "transparent",
-              color: view === v.id ? T.text : T.muted,
-              cursor: "pointer",
-              fontSize: 20,
-            }}
-          >
-            {v.icon}
-          </button>
-        ))}
-      </div>
-      <div
-        style={{
-          padding: "8px 12px",
-          borderBottom: `1px solid ${T.border}`,
-        }}
-      >
-        <input
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search chapters…"
+      {mobile ? (
+        <div
           style={{
-            width: "100%",
-            background: T.elevated,
-            border: `1px solid ${T.border}`,
-            borderRadius: 8,
-            padding: "7px 12px",
-            color: T.text,
-            fontSize: 12,
-            outline: "none",
-            boxSizing: "border-box",
+            display: "flex",
+            gap: 6,
+            overflowX: "auto",
+            padding: "10px 12px",
+            borderBottom: `1px solid ${T.border}`,
+            WebkitOverflowScrolling: "touch",
           }}
-        />
+        >
+          {[
+            { id: "home", icon: "🏠", label: "Home" },
+            { id: "map", icon: "🕸️", label: "Map" },
+            { id: "glossary", icon: "📖", label: "Glossary" },
+          ].map((v) => (
+            <button
+              key={v.id}
+              onClick={() => setView(v.id)}
+              style={{
+                flex: "0 0 auto",
+                padding: "8px 12px",
+                borderRadius: 999,
+                border: `1px solid ${view === v.id ? T.accent : T.border}`,
+                background: view === v.id ? `${T.accent}22` : T.elevated,
+                color: view === v.id ? T.text : T.muted,
+                cursor: "pointer",
+                fontSize: 12,
+                fontWeight: 700,
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
+              }}
+            >
+              <span>{v.icon}</span>
+              <span>{v.label}</span>
+            </button>
+          ))}
+        </div>
+      ) : (
+        <div
+          style={{
+            padding: "8px",
+            borderBottom: `1px solid ${T.border}`,
+            display: "flex",
+            gap: 4,
+          }}
+        >
+          {[
+            { id: "home", icon: "🏠" },
+            { id: "map", icon: "🕸️" },
+            { id: "glossary", icon: "📖" },
+          ].map((v) => (
+            <button
+              key={v.id}
+              onClick={() => setView(v.id)}
+              style={{
+                flex: 1,
+                padding: "8px 4px",
+                borderRadius: 8,
+                border: "none",
+                background: view === v.id ? T.elevated : "transparent",
+                color: view === v.id ? T.text : T.muted,
+                cursor: "pointer",
+                fontSize: 20,
+              }}
+            >
+              {v.icon}
+            </button>
+          ))}
+        </div>
+      )}
+      <div
+        style={{
+          padding: mobile ? "10px 12px 8px" : "8px 12px",
+          borderBottom: `1px solid ${T.border}`,
+        }}
+      >
+        {mobile ? (
+          <>
+            <div style={{ color: T.muted, fontSize: 10, fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", marginBottom: 6 }}>
+              Jump to chapter
+            </div>
+            <select
+              value={selCh ?? ""}
+              onChange={(e) => {
+                const value = Number(e.target.value);
+                if (!Number.isNaN(value)) openChapter(value);
+              }}
+              style={{
+                width: "100%",
+                background: T.elevated,
+                border: `1px solid ${T.border}`,
+                borderRadius: 10,
+                padding: "10px 12px",
+                color: T.text,
+                fontSize: 12,
+                outline: "none",
+                boxSizing: "border-box",
+              }}
+            >
+              <option value="">Select a chapter</option>
+              {CHAPTERS.map((chapter) => (
+                <option key={chapter.n} value={chapter.n}>
+                  Ch {chapter.n}: {chapter.title}
+                </option>
+              ))}
+            </select>
+          </>
+        ) : (
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search chapters…"
+            style={{
+              width: "100%",
+              background: T.elevated,
+              border: `1px solid ${T.border}`,
+              borderRadius: 8,
+              padding: "7px 12px",
+              color: T.text,
+              fontSize: 12,
+              outline: "none",
+              boxSizing: "border-box",
+            }}
+          />
+        )}
       </div>
       <div style={{ flex: 1, overflowY: "auto", padding: "6px 0" }}>
         {PARTS.map((p) => {
@@ -3998,6 +4076,14 @@ export default function App() {
     {}
   );
   const [search, setSearch] = useState("");
+  const [mobile, setMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setMobile(window.innerWidth <= 900);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   useEffect(() => {
     const l = document.createElement("link");
@@ -4031,8 +4117,10 @@ export default function App() {
     <div
       style={{
         display: "flex",
-        height: "100vh",
-        overflow: "hidden",
+        flexDirection: mobile ? "column" : "row",
+        minHeight: "100vh",
+        height: mobile ? "auto" : "100vh",
+        overflow: mobile ? "visible" : "hidden",
         background: T.bg,
         color: T.text,
       }}
@@ -4046,8 +4134,9 @@ export default function App() {
         quizScores={quizScores}
         search={search}
         setSearch={setSearch}
+        mobile={mobile}
       />
-      <div style={{ flex: 1, overflowY: "auto" }}>
+      <div style={{ flex: 1, overflowY: mobile ? "visible" : "auto", minWidth: 0 }}>
         {view === "chapter" && ch ? (
           <ChapterView
             ch={ch}

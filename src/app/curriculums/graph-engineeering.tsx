@@ -2504,6 +2504,7 @@ function Sidebar({
   quizScores,
   search,
   setSearch,
+  mobile,
 }: {
   view: string;
   setView: (value: string) => void;
@@ -2513,6 +2514,7 @@ function Sidebar({
   quizScores: Record<number, { score: number; total: number }>;
   search: string;
   setSearch: (value: string) => void;
+  mobile: boolean;
 }) {
   const [expanded, setExpanded] = useState<Set<number>>(new Set([0, 1, 2, 3, 4, 5]));
   const toggle = (id: number) => setExpanded((s) => {
@@ -2525,9 +2527,15 @@ function Sidebar({
   const maxQ = Object.values(quizScores).reduce((a, s) => a + s.total, 0);
   return (
     <div style={{
-      width: 270, background: T.surface, borderRight: `1px solid ${T.border}`,
-      height: "100vh", overflowY: "auto", flexShrink: 0,
+      width: mobile ? "100%" : 270,
+      background: T.surface,
+      borderRight: mobile ? "none" : `1px solid ${T.border}`,
+      borderBottom: mobile ? `1px solid ${T.border}` : "none",
+      height: mobile ? "auto" : "100vh",
+      overflowY: mobile ? "visible" : "auto",
+      flexShrink: 0,
       display: "flex", flexDirection: "column",
+      maxHeight: mobile ? "none" : "100vh",
     }}>
       <div style={{ padding: "18px 16px 12px", borderBottom: `1px solid ${T.border}` }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 2 }}>
@@ -2802,6 +2810,14 @@ export default function App() {
   const [notes, setNotes] = useState<Record<number, string>>({});
   const [quizScores, setQuizScores] = useState<Record<number, { score: number; total: number }>>({});
   const [search, setSearch] = useState("");
+  const [mobile, setMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setMobile(window.innerWidth <= 900);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   useEffect(() => {
     const l = document.createElement("link");
@@ -2826,13 +2842,18 @@ export default function App() {
 
   return (
     <div style={{
-      display: "flex", height: "100vh", overflow: "hidden",
-      background: T.bg, color: T.text,
+      display: "flex",
+      flexDirection: mobile ? "column" : "row",
+      minHeight: "100vh",
+      height: mobile ? "auto" : "100vh",
+      overflow: mobile ? "visible" : "hidden",
+      background: T.bg,
+      color: T.text,
     }}>
       <Sidebar view={view} setView={setView} openChapter={openChapter}
         selCh={selCh} read={read} quizScores={quizScores}
-        search={search} setSearch={setSearch} />
-      <div style={{ flex: 1, overflowY: "auto" }}>
+        search={search} setSearch={setSearch} mobile={mobile} />
+      <div style={{ flex: 1, overflowY: mobile ? "visible" : "auto", minWidth: 0 }}>
         {view === "chapter" && ch ? (
           <ChapterView ch={ch} color={color} onBack={() => setView("home")}
             read={read} toggleRead={toggleRead} notes={notes} setNotes={setNotes} onScore={onScore} />
