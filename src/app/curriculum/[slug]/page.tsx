@@ -1,14 +1,18 @@
 import { notFound } from "next/navigation";
 import CloudComputingCurriculumPage from "@/app/curriculums/cloud-computing";
+import CybersecurityCurriculumPage from "@/app/curriculums/cybersecurity";
 import DataScienceCurriculumPage from "@/app/curriculums/data-science";
 import FrontierLLMCurriculumPage from "@/app/curriculums/frontier-llm";
 import GraphCurriculumPage from "@/app/curriculums/graph-engineeering";
+import QuantumComputingCurriculumPage from "@/app/curriculums/quantum-computing";
 
 const supportedCurricula = {
   "cloud-computing": CloudComputingCurriculumPage,
+  "cybersecurity": CybersecurityCurriculumPage,
   "data-science": DataScienceCurriculumPage,
   "frontier-llm": FrontierLLMCurriculumPage,
   "graph-engineering": GraphCurriculumPage,
+  "quantum-computing": QuantumComputingCurriculumPage,
 } as const;
 
 function GenericCurriculumPage({ slug }: { slug: string }) {

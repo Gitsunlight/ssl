@@ -52,6 +52,7 @@ const PARTS = [
   { id: 7, label: "Graph Analytics at Scale", icon: "⚙️", chs: [23, 24, 25] },
   { id: 8, label: "Graphs in AI Systems", icon: "🤖", chs: [26, 27, 28] },
   { id: 9, label: "Engineering Frontier", icon: "🚀", chs: [29, 30, 31] },
+  { id: 10, label: "Compiler & Program Graphs", icon: "🧩", chs: [32, 33, 34, 35] },
 ];
 
 // ── Chapters ──────────────────────────────────────────────────────────────
@@ -984,6 +985,156 @@ const CHAPTERS = [
       },
     ],
   },
+  {
+    n: 32,
+    part: 10,
+    title: "Abstract Syntax Trees",
+    tagline: "Parsing code into a structured graph of meaning",
+    insight:
+      "An AST is a tree-shaped program representation where syntax is turned into explicit nodes, operators, and operands.",
+    content: [
+      {
+        type: "p",
+        text: "The Abstract Syntax Tree (AST) is the earliest major graph in compiler pipelines. It represents program structure as a tree: assignments, expressions, conditionals, loops, function calls, and return values. Each node is a language construct; edges represent composition.",
+      },
+      {
+        type: "code",
+        text: `x = y + 1;
+if (x > 0) {
+  z = x * 2;
+}
+
+AST nodes: Assign, Add, Compare, If, Call, Return`,
+      },
+      {
+        type: "table",
+        head: ["AST Pattern", "Meaning"],
+        rows: [
+          ["BinaryExpr", "Operator with left and right operands"],
+          ["IfStmt", "Conditional branch"],
+          ["CallExpr", "Function invocation"],
+          ["VarDecl", "Variable definition"],
+          ["ReturnStmt", "Control exits a function"],
+        ],
+      },
+      {
+        type: "insight",
+        text: "The AST is the canonical graph for language tooling: pretty-printers, linters, refactoring engines, type checkers, and code generators all operate on it or on an enriched variant of it.",
+      },
+    ],
+  },
+  {
+    n: 33,
+    part: 10,
+    title: "Control-Flow Graphs",
+    tagline: "Program execution as a graph of reachable states",
+    insight:
+      "A CFG is a directed graph where nodes are basic blocks and edges are possible execution paths between them.",
+    content: [
+      {
+        type: "p",
+        text: "Control-flow graphs (CFGs) model how execution moves through a program. Each node represents a basic block — a straight-line sequence of instructions — and each edge captures a branch, jump, or fall-through pathway. CFGs are essential for optimization, reachability analysis, and bug detection.",
+      },
+      {
+        type: "code",
+        text: `entry -> B1 -> B2 -> B3
+             \    \_
+                 -> exit
+
+B1: if (x > 0) goto B2 else B3`,
+      },
+      {
+        type: "table",
+        head: ["CFG Property", "What It Tells You"],
+        rows: [
+          ["Reachability", "Which blocks can execute from entry"],
+          ["Dominators", "Which blocks always execute before a node"],
+          ["Loops", "Back-edges and cycle structure"],
+          ["Branching", "True/false path conditions"],
+        ],
+      },
+      {
+        type: "insight",
+        text: "CFGs answer the question: 'what can happen next?' This makes them the foundation for many compiler analyses — dead-code elimination, loop optimization, branch prediction, and security checks.",
+      },
+    ],
+  },
+  {
+    n: 34,
+    part: 10,
+    title: "Data Dependence Graphs",
+    tagline: "Tracing which values flow into which computations",
+    insight:
+      "A DDG is a graph of value producers and consumers: every edge means 'this value influences this use'.",
+    content: [
+      {
+        type: "p",
+        text: "Data dependence graphs (DDGs) model the flow of values through a program. They connect definitions to later uses, revealing when a value is reused, overwritten, or can be optimized away. DDGs complement CFGs by focusing on data movement instead of execution order.",
+      },
+      {
+        type: "code",
+        text: `x = a + b
+y = x * 2
+z = y + 3
+
+DDG edges: a -> x -> y -> z
+           b -> x -> y -> z`,
+      },
+      {
+        type: "table",
+        head: ["Graph Lens", "Question"],
+        rows: [
+          ["CFG", "What executes next?"],
+          ["DDG", "What value influences this use?"],
+          ["AST", "What is the syntax tree?"],
+          ["SSA", "How are versions of a variable tracked?"],
+        ],
+      },
+      {
+        type: "insight",
+        text: "A program is not just a series of instructions; it is a dependency network. DDGs are the graphs that let compilers reason about parallelism, elimination, and reordering without changing semantics.",
+      },
+    ],
+  },
+  {
+    n: 35,
+    part: 10,
+    title: "SSA Form and Def-Use Graphs",
+    tagline: "Each value has a unique version, and each use points to a definition",
+    insight:
+      "SSA makes program analysis cleaner by ensuring every variable assignment creates a new version and every use is explicit.",
+    content: [
+      {
+        type: "p",
+        text: "Static Single Assignment (SSA) is a compiler representation where each variable is assigned exactly once. When a value may come from multiple control-flow paths, a phi node merges versions. This creates a clear def-use graph that makes optimization and analysis easier.",
+      },
+      {
+        type: "code",
+        text: `x1 = a + b
+if (cond) {
+  x2 = x1 + 1
+} else {
+  x3 = x1 - 1
+}
+x4 = phi(x2, x3)
+y = x4 * 2`,
+      },
+      {
+        type: "table",
+        head: ["SSA Concept", "Why It Helps"],
+        rows: [
+          ["Single assignment", "No ambiguity about which value is current"],
+          ["Phi node", "Merge values from multiple predecessors"],
+          ["Def-use chains", "Directly connect definitions to uses"],
+          ["Optimization", "Simplifies constant propagation and dead code elimination"],
+        ],
+      },
+      {
+        type: "insight",
+        text: "SSA is one of the most important program-analysis graphs in modern compilers. It converts a program from a mutable state machine into a richer value graph, which is easier to analyze, optimize, and lower to machine code.",
+      },
+    ],
+  },
 ];
 
 // ── Quizzes ───────────────────────────────────────────────────────────────
@@ -1194,6 +1345,102 @@ const QUIZZES = {
       exp: "Elias-Fano is a succinct encoding for monotone sequences (like sorted adjacency lists). It stores them in near-optimal space while supporting fast rank/select queries — essential for compressed graph structures.",
     },
   ],
+  32: [
+    {
+      q: "What does an AST represent?",
+      opts: [
+        "A graph of runtime memory addresses",
+        "The parse structure of a program's syntax",
+        "A network of connected machines",
+        "A random walk over execution states",
+      ],
+      ans: 1,
+      exp: "An AST is a tree-shaped representation of program structure: variables, operators, conditionals, calls, and control constructs. It expresses syntax as a structured graph, not as plain text.",
+    },
+    {
+      q: "Why are ASTs important in toolchains?",
+      opts: [
+        "They replace the runtime",
+        "They are used by linters, refactors, type checkers, and code generators",
+        "They are only for visual plotting",
+        "They are only used in databases",
+      ],
+      ans: 1,
+      exp: "ASTs capture meaning in a structured way, which is exactly what static analysis and transformations need. Refactoring, type checking, code generation, and linting all rely on AST-level structure.",
+    },
+  ],
+  33: [
+    {
+      q: "What is a CFG?",
+      opts: [
+        "A graph of variable definitions",
+        "A directed graph of basic blocks and execution paths",
+        "A tree of parse nodes",
+        "A social graph of code contributors",
+      ],
+      ans: 1,
+      exp: "A Control-Flow Graph (CFG) models how execution moves between basic blocks. It makes branch structure visible and is central to compiler analysis and optimization.",
+    },
+    {
+      q: "What does a CFG help answer?",
+      opts: [
+        "Which variables are used by which function?",
+        "What can happen next during execution?",
+        "How to render a syntax tree?",
+        "Which nodes are in the same community?",
+      ],
+      ans: 1,
+      exp: "CFGs are built to answer flow questions: reachability, dominance, loops, and branch behavior. This is essential for optimization and safety analysis.",
+    },
+  ],
+  34: [
+    {
+      q: "A DDG primarily captures:",
+      opts: [
+        "Execution order only",
+        "Value producer-to-consumer flows",
+        "The parse tree of an expression",
+        "User interface components",
+      ],
+      ans: 1,
+      exp: "A Data Dependence Graph (DDG) connects definitions to their later uses. It lets the compiler reason about data flow and optimization opportunities without changing semantics.",
+    },
+    {
+      q: "Why do DDGs matter for optimization?",
+      opts: [
+        "They reveal reusable values and dependencies across instructions",
+        "They replace type inference",
+        "They are only for dead code detection",
+        "They ignore variables and only track labels",
+      ],
+      ans: 0,
+      exp: "A DDG makes dependencies explicit, allowing the compiler to reorder or simplify computations while preserving required data flow. It is a key concept in parallelization and optimization.",
+    },
+  ],
+  35: [
+    {
+      q: "What does SSA guarantee?",
+      opts: [
+        "Each variable is assigned exactly once before use",
+        "Every variable can be mutated freely",
+        "All loops are removed",
+        "The parser outputs a social graph",
+      ],
+      ans: 0,
+      exp: "In Static Single Assignment form, each variable assignment creates a new version. This removes ambiguity and simplifies def-use analysis and optimization.",
+    },
+    {
+      q: "What is a phi node used for?",
+      opts: [
+        "A branch in the AST",
+        "A merge of values from different control-flow paths",
+        "A type cast in the parser",
+        "A newline token in the lexer",
+      ],
+      ans: 1,
+      exp: "When a value can arrive from multiple predecessors, a phi node merges them into a single SSA variable. This makes control-flow merges explicit and analyzable.",
+    },
+  ],
 };
 
 // ── Glossary ──────────────────────────────────────────────────────────────
@@ -1201,11 +1448,14 @@ const GLOSSARY = [
   { term: "Adjacency List", def: "Graph representation: each node stores a list of its neighbors. Space-efficient for sparse graphs, fast neighbor iteration.", ch: 2 },
   { term: "Adjacency Matrix", def: "Graph representation: V×V matrix where entry (i,j) indicates an edge. O(1) edge lookup but O(V²) space.", ch: 2 },
   { term: "A*", def: "Shortest-path algorithm that combines Dijkstra with a heuristic guiding search toward the goal. Optimal with an admissible heuristic.", ch: 6 },
+  { term: "AST", def: "Abstract Syntax Tree. A structured graph of program syntax where operators, variables, and statements are explicit nodes and edges.", ch: 32 },
   { term: "BFS", def: "Breadth-First Search. Explores level by level using a queue. Finds shortest paths in unweighted graphs.", ch: 5 },
   { term: "Betweenness Centrality", def: "Measures how often a node lies on shortest paths between other nodes. High values indicate bridges or bottlenecks.", ch: 7 },
   { term: "Bipartite Graph", def: "Graph whose nodes can be split into two sets with edges only between sets. Models users↔items, authors↔papers.", ch: 4 },
+  { term: "CFG", def: "Control-Flow Graph. Directed graph of basic blocks and branches that captures program execution paths.", ch: 33 },
   { term: "Cypher", def: "Declarative graph query language used by Neo4j. Patterns written as ASCII art: (a)-[:KNOWS]->(b).", ch: 11 },
   { term: "DAG", def: "Directed Acyclic Graph. Enables topological sort and represents dependencies. Used in build systems, ML pipelines.", ch: 4 },
+  { term: "DDG", def: "Data Dependence Graph. Shows which definitions flow into which uses, enabling optimization and parallelization.", ch: 34 },
   { term: "DFS", def: "Depth-First Search. Explores as deep as possible before backtracking. Detects cycles, components, and topological order.", ch: 5 },
   { term: "Dijkstra", def: "Shortest-path algorithm for non-negative weights. Greedy expansion with a priority queue. O((V+E) log V).", ch: 6 },
   { term: "Edge List", def: "Graph representation: list of (u, v) pairs. Simple, compact, good for streaming and batch processing.", ch: 2 },
@@ -1224,11 +1474,13 @@ const GLOSSARY = [
   { term: "Ontology", def: "Formal specification of classes, properties, and inference rules for a knowledge graph. RDFS and OWL are standards.", ch: 14 },
   { term: "Over-smoothing", def: "GNN failure mode: after many layers, all node representations converge. Mitigated by skip connections and residual layers.", ch: 17 },
   { term: "PageRank", def: "Centrality measure based on random-walk stationary distribution. Nodes linked from important nodes rank higher. Powers web search.", ch: 7 },
+  { term: "Phi Node", def: "SSA merge operation that combines values from multiple incoming control-flow paths into a single variable version.", ch: 35 },
   { term: "Pregel", def: "Google's vertex-centric distributed graph processing model. Each vertex runs a function, exchanges messages, votes to halt.", ch: 23 },
   { term: "Property Graph", def: "Graph model where nodes and edges have key-value properties. Flexible, schema-optional. Used by Neo4j, Neptune.", ch: 10 },
   { term: "RDF", def: "Resource Description Framework. W3C standard for representing knowledge as subject-predicate-object triples.", ch: 13 },
   { term: "Shortest Path", def: "Minimum-cost path between two nodes. Computed by BFS (unweighted), Dijkstra (non-negative), Bellman-Ford (negative OK).", ch: 6 },
   { term: "SPARQL", def: "Query language for RDF triple stores. Declarative, pattern-based, W3C standard.", ch: 11 },
+  { term: "SSA", def: "Static Single Assignment. A compiler form where each variable is assigned exactly once and def-use edges are explicit.", ch: 35 },
   { term: "Succinct Data Structure", def: "Storage that uses near-information-theoretic space while supporting fast queries. Used for compressed graphs.", ch: 25 },
   { term: "Topological Sort", def: "Linear ordering of a DAG's nodes such that every edge goes from earlier to later. Used in build systems, scheduling.", ch: 4 },
   { term: "Triple", def: "Knowledge graph fact: (subject, predicate, object). The atom of RDF and many knowledge graphs.", ch: 13 },
@@ -1265,6 +1517,7 @@ const EDGES = [
   [28, 29],
   [29, 30], [29, 31],
   [30, 31],
+  [0, 32], [20, 32], [32, 33], [33, 34], [34, 35],
 ];
 
 const NODE_POS = (() => {
