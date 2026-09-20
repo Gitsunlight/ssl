@@ -349,7 +349,30 @@ svg {
   }
 
   .catalog-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 12px;
+  }
+
+  .catalog-card {
+    padding: 16px 16px;
+  }
+
+  .catalog-card h3 {
+    font-size: 15px !important;
+  }
+
+  .catalog-card p {
+    font-size: 12px !important;
+  }
+
+  .catalog-card-tag-cloud span {
+    font-size: 9px !important;
+    padding: 2px 8px !important;
+  }
+
+  .catalog-card-meta {
+    gap: 6px;
+    font-size: 10px !important;
   }
 
   .search-shell {
@@ -381,12 +404,20 @@ svg {
     padding-bottom: 26px;
   }
 
+  .catalog-grid {
+    grid-template-columns: 1fr;
+  }
+
   .hero-title {
     font-size: clamp(2rem, 10vw, 2.8rem);
   }
 
   .tag-filter {
     justify-content: flex-start;
+  }
+
+  .catalog-card {
+    padding: 14px 14px;
   }
 
   .catalog-card-meta {

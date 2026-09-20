@@ -78,7 +78,7 @@ const CURRICULUMS = [
     terms: 22,
     tags: ["Blockchain", "Web3", "Ethereum", "DeFi", "Smart Contracts"],
     path: "/curriculum/blockchain-web3",
-    featured: true,
+    featured: false,
     version: "2.5",
     date: "2026",
     author: "Sunlight Blockchain Labs",
@@ -98,7 +98,7 @@ const CURRICULUMS = [
     terms: 30,
     tags: ["Security", "Network Security", "Cryptography", "SOC"],
     path: "/curriculum/cybersecurity",
-    featured: false,
+    featured: true,
     version: "2.0",
     date: "2026",
     author: "Sunlight Security Division",
@@ -118,7 +118,7 @@ const CURRICULUMS = [
     terms: 28,
     tags: ["Data Science", "ML", "Statistics", "Python"],
     path: "/curriculum/data-science",
-    featured: false,
+    featured: true,
     version: "2.5",
     date: "2026",
     author: "Sunlight Data Science Team",
@@ -178,7 +178,7 @@ const CURRICULUMS = [
     terms: 22,
     tags: ["AI Agents", "RAG", "LLM", "Autonomous Systems"],
     path: "/curriculum/ai-agents",
-    featured: true,
+    featured: false,
     version: "1.5",
     date: "2026",
     author: "Sunlight AI Research",
@@ -198,7 +198,7 @@ const CURRICULUMS = [
     terms: 22,
     tags: ["Quantum Computing", "Qubits", "Quantum Algorithms", "Error Correction"],
     path: "/curriculum/quantum-computing",
-    featured: false,
+    featured: true,
     version: "1.0",
     date: "2026",
     author: "Sunlight Quantum Research",
@@ -218,11 +218,66 @@ const CURRICULUMS = [
     terms: 22,
     tags: ["Graph Engineering", "Data Modeling", "Query Optimization", "Distributed Processing"],
     path: "/curriculum/graph-engineering",
-    featured: false,
+    featured: true,
     version: "1.0",
     date: "2026",
     author: "Sunlight Data Engineering",
-  }
+  },
+  ...Array.from({ length: 120 }, (_, index) => {
+    const domains = [
+      { label: "AI Systems", icon: "🧠", color: "#22D3EE", tags: ["AI", "Systems"], slug: "ai-systems" },
+      { label: "Data Engineering", icon: "📊", color: "#60A5FA", tags: ["Data", "Pipelines"], slug: "data-engineering" },
+      { label: "Product Design", icon: "🎨", color: "#A78BFA", tags: ["Design", "UX"], slug: "product-design" },
+      { label: "Cyber Defense", icon: "🛡️", color: "#34D399", tags: ["Security", "Defense"], slug: "cyber-defense" },
+      { label: "FinTech", icon: "💳", color: "#FBBF24", tags: ["Finance", "Technology"], slug: "fintech" },
+      { label: "Robotics", icon: "🤖", color: "#FB7185", tags: ["Robotics", "Automation"], slug: "robotics" },
+      { label: "Frontend Systems", icon: "💻", color: "#F97316", tags: ["Frontend", "UX"], slug: "frontend-systems" },
+      { label: "DevOps", icon: "🚀", color: "#8B5CF6", tags: ["DevOps", "Platform"], slug: "devops" },
+      { label: "Human Skills", icon: "🧭", color: "#2DD4BF", tags: ["Leadership", "Communication"], slug: "human-skills" },
+      { label: "Sustainability", icon: "🌱", color: "#4ADE80", tags: ["Climate", "Systems"], slug: "sustainability" },
+    ];
+    const base = domains[index % domains.length];
+    const block = ["Foundations", "Practice", "Systems", "Operations", "Leadership", "Research"][index % 6];
+    const chapterCount = 12 + ((index * 7) % 28);
+    const partCount = 4 + ((index * 3) % 9);
+    const quizCount = 6 + (index % 8);
+    const termCount = 10 + (index % 18);
+    const version = (1 + (index % 6) + (index % 3) / 10).toFixed(1);
+    const title = `${base.label} ${block} Curriculum`;
+    const nonFeaturedTitles = new Set([
+      "Product Design Systems Curriculum",
+      "Cyber Defense Operations Curriculum",
+      "FinTech Leadership Curriculum",
+      "Data Engineering Practice Curriculum",
+      "Robotics Research Curriculum",
+      "Frontend Systems Foundations Curriculum",
+      "DevOps Practice Curriculum",
+      "Human Skills Systems Curriculum",
+      "Sustainability Operations Curriculum",
+      "AI Systems Foundations Curriculum",
+    ]);
+
+    return {
+      id: `${base.slug}-${index + 1}`,
+      title,
+      subtitle: `From fundamentals to real-world practice and systems thinking`,
+      description:
+        `Explore ${base.label.toLowerCase()} with structured learning across architecture, execution, and applied decision-making. ${chapterCount} chapters across ${partCount} parts.`,
+      icon: base.icon,
+      color: base.color,
+      gradient: `linear-gradient(135deg, ${base.color}, #A78BFA)`,
+      chapters: chapterCount,
+      parts: partCount,
+      quizzes: quizCount,
+      terms: termCount,
+      tags: [...new Set([base.tags[0], base.tags[1], "Learning", "Applied Practice"])],
+      path: `/curriculum/${base.slug}-${index + 1}`,
+      featured: nonFeaturedTitles.has(title) ? false : index < 10,
+      version,
+      date: "2026",
+      author: "Sunlight Academy",
+    };
+  }),
 ];
 
 // ── Main Page ────────────────────────────────────────────────────────────
@@ -230,9 +285,11 @@ export default function Home() {
   const [search, setSearch] = useState("");
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [visibleCount, setVisibleCount] = useState(6);
+  const [showAllTags, setShowAllTags] = useState(false);
 
   // Get all unique tags
   const allTags = Array.from(new Set(CURRICULUMS.flatMap((c) => c.tags)));
+  const visibleTags = showAllTags ? allTags : allTags.slice(0, 8);
 
   // Filter curriculums based on search and tag
   const filtered = CURRICULUMS.filter((c) => {
@@ -279,6 +336,8 @@ export default function Home() {
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
+              width: "fit-content",
+              maxWidth: "100%",
             }}
           >
             <span style={{ fontSize: 20 }}>☀️</span>
@@ -357,7 +416,7 @@ export default function Home() {
             >
               All
             </button>
-            {allTags.map((tag) => (
+            {visibleTags.map((tag) => (
               <button
                 key={tag}
                 onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
@@ -376,6 +435,42 @@ export default function Home() {
                 {tag}
               </button>
             ))}
+            {allTags.length > visibleTags.length && (
+              <button
+                onClick={() => setShowAllTags(true)}
+                style={{
+                  padding: "4px 12px",
+                  borderRadius: 16,
+                  border: `1px solid ${T.border}`,
+                  background: "transparent",
+                  color: T.accent,
+                  cursor: "pointer",
+                  fontSize: 12,
+                  fontWeight: 600,
+                  transition: "all .15s",
+                }}
+              >
+                More +
+              </button>
+            )}
+            {showAllTags && allTags.length > 8 && (
+              <button
+                onClick={() => setShowAllTags(false)}
+                style={{
+                  padding: "4px 12px",
+                  borderRadius: 16,
+                  border: `1px solid ${T.border}`,
+                  background: "transparent",
+                  color: T.muted,
+                  cursor: "pointer",
+                  fontSize: 12,
+                  fontWeight: 600,
+                  transition: "all .15s",
+                }}
+              >
+                Show Less
+              </button>
+            )}
           </div>
         </div>
       </section>
