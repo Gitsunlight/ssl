@@ -4,6 +4,7 @@
 import jsx from "react/jsx-runtime";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { RelatedCurriculums } from "./related-curriculums";
+import { CurriculumHero } from "./curriculum-hero";
 
 // ── Design Tokens ─────────────────────────────────────────────────────────
 const T = {
@@ -3274,6 +3275,7 @@ function Overview({ setView, openChapter, read, quizScores }) {
   const recentlyRead = [...read].slice(-3).reverse();
   return (
     <div className="curriculum-overview" style={{ maxWidth: 980, margin: "0 auto", padding: "0 16px 60px" }}>
+      <CurriculumHero eyebrow="Quantum path" title="Quantum Computing" description="A visual route from qubits and gates to algorithms, error correction, and quantum advantage." icon="⚛️" color="#8B5CF6" secondaryColor="#EC4899" parts={PARTS.length} chapters={CHAPTERS.length} terms={GLOSSARY.length} signal="Qubits → circuits → advantage" nodes={["Qubit", "Gate", "State", "Noise", "Algo"]} />
       <div style={{ padding: "40px 0 28px", textAlign: "center", position: "relative", overflow: "hidden" }}>
         <div style={{
           position: "absolute", inset: 0,
@@ -3284,11 +3286,11 @@ function Overview({ setView, openChapter, read, quizScores }) {
           color: T.accent, fontSize: 11, fontWeight: 700, letterSpacing: ".15em",
           textTransform: "uppercase", marginBottom: 10,
         }}>Version 1.0 · 2026</div>
-        <h1 style={{
+        {/* <h1 style={{
           fontSize: 34, fontWeight: 900, margin: "0 0 10px",
           background: "linear-gradient(135deg,#F0F6FF 30%,#22D3EE)",
           WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", lineHeight: 1.2,
-        }}>Quantum Computing</h1>
+        }}>Quantum Computing</h1> */}
         <p style={{ color: T.muted, fontSize: 15, margin: "0 0 24px" }}>
           11 Parts · 36 Chapters · From Linear Algebra to Fault Tolerance
         </p>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { RelatedCurriculums } from "./related-curriculums";
+import { CurriculumHero } from "./curriculum-hero";
 
 // ── Design Tokens ─────────────────────────────────────────────────────────
 const T = {
@@ -1575,6 +1576,7 @@ function Overview({ setView, openChapter, read, quizScores }: {
   const recentlyRead = [...read].slice(-3).reverse();
   return (
     <div className="curriculum-overview" style={{ maxWidth: 980, margin: "0 auto", padding: "0 16px 60px" }}>
+      <CurriculumHero eyebrow="Platform engineering path" title="Google-Scale Monorepo" description="A visual route from source control and workspaces to build graphs, review, execution, and safe delivery." icon="🧩" color="#14B8A6" secondaryColor="#22D3EE" parts={PARTS.length} chapters={CHAPTERS.length} terms={GLOSSARY.length} signal="Source → build → production" nodes={["Piper", "CITC", "Bazel", "Borg", "BAB"]} />
       <div style={{ padding: "40px 0 28px", textAlign: "center", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 50% 0%, #22D3EE0A 0%, transparent 70%)", pointerEvents: "none" }} />
         <div style={{ color: T.accent, fontSize: 11, fontWeight: 700, letterSpacing: ".15em", textTransform: "uppercase", marginBottom: 10 }}>Version 3.0 · 2026</div>

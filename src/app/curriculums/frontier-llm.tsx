@@ -3,6 +3,7 @@
 import jsx from "react/jsx-runtime";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { RelatedCurriculums } from "./related-curriculums";
+import { CurriculumHero } from "./curriculum-hero";
 
 // ── Design Tokens ─────────────────────────────────────────────────────────
 const T = {
@@ -3279,7 +3280,7 @@ function ConceptMap({
         🕸️ Knowledge Graph
       </h2>
       <p style={{ color: T.muted, fontSize: 13, marginBottom: 16 }}>
-        All 41 chapters and their conceptual connections. Click any node to open
+        All 38 chapters and their conceptual connections. Click any node to open
         that chapter. ⊙ = read
       </p>
       <div style={{ overflowX: "auto", marginBottom: 16 }}>
@@ -3583,11 +3584,11 @@ function Sidebar({
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 2 }}>
           <span style={{ fontSize: 18 }}>🧠</span>
           <div style={{ color: T.text, fontWeight: 800, fontSize: 15 }}>
-            Frontier LLM V3
+            Frontier LLM 
           </div>
         </div>
         <div style={{ color: T.muted, fontSize: 11, marginLeft: 26 }}>
-          12 Parts · 41 Chapters
+          13 Parts · 38 Chapters · 31 Terms
         </div>
       </div>
       {mobile ? (
@@ -3914,6 +3915,7 @@ function Overview({
   const recentlyRead = [...read].slice(-3).reverse();
   return (
     <div className="curriculum-overview" style={{ maxWidth: 980, margin: "0 auto", padding: "0 16px 60px" }}>
+      <CurriculumHero eyebrow="Frontier systems path" title="The Frontier LLM Curriculum" description="A visual route from bits, tokens, and vectors to training, inference, agents, and frontier-scale systems." icon="🧠" color="#22D3EE" secondaryColor="#A78BFA" parts={13} chapters={38} terms={31} signal="Data → model → intelligence" nodes={["Bits", "Tokens", "Attn", "Train", "Agents"]} />
       <div
         style={{
           padding: "40px 0 28px",
@@ -3943,7 +3945,7 @@ function Overview({
         >
           Version 3.0 · 2026
         </div>
-        <h1
+        {/* <h1
           style={{
             fontSize: 34,
             fontWeight: 900,
@@ -3955,9 +3957,9 @@ function Overview({
           }}
         >
           The Frontier LLM Curriculum
-        </h1>
+        </h1> */}
         <p style={{ color: T.muted, fontSize: 15, margin: "0 0 24px" }}>
-          12 Parts · 41 Chapters · From Fundamentals to Frontier Systems
+          From Fundamentals to Frontier Systems
         </p>
         <div
           style={{
@@ -4002,10 +4004,10 @@ function Overview({
         }}
       >
         {[
-          { n: CHAPTERS.length, label: "Chapters" },
-          { n: 12, label: "Parts" },
+          { n: 38, label: "Chapters" },
+          { n: 13, label: "Parts" },
           { n: Object.keys(QUIZZES).length, label: "Quizzes" },
-          { n: GLOSSARY.length, label: "Terms" },
+          { n: 31, label: "Terms" },
         ].map((s) => (
           <div
             key={s.label}

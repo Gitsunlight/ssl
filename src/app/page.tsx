@@ -412,6 +412,17 @@ export default function Home() {
             </span>
           </div>
 
+          <div className="catalog-signal" aria-label="Sunlight Academy learning system">
+            <div className="catalog-signal-core">☀️</div>
+            <div className="catalog-signal-ring catalog-signal-ring-one" />
+            <div className="catalog-signal-ring catalog-signal-ring-two" />
+            {CURRICULUMS.slice(0, 6).map((curriculum, index) => (
+              <span key={curriculum.id} className="catalog-signal-node" style={{ "--node-index": index } as React.CSSProperties}>
+                {curriculum.icon}
+              </span>
+            ))}
+          </div>
+
           <h1 className="hero-title" style={{ fontSize: 48, fontWeight: 900, margin: "0 0 12px", lineHeight: 1.1 }}>
             Curriculum Catlog
           </h1>

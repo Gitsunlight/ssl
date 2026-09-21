@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { RelatedCurriculums } from "./related-curriculums";
+import { CurriculumHero } from "./curriculum-hero";
 
 // ── Design Tokens (exactly matching frontier-llm.tsx) ─────────────────────
 const T = {
@@ -2280,6 +2281,7 @@ function Overview({
   const recentlyRead = [...read].slice(-3).reverse();
   return (
     <div className="curriculum-overview" style={{ maxWidth: 980, margin: "0 auto", padding: "0 16px 60px" }}>
+      <CurriculumHero eyebrow="Signal path" title="Information Theory" description="A visual route from bits and probability to entropy, communication, compression, and meaning." icon="📡" color="#2DD4BF" secondaryColor="#60A5FA" parts={PARTS.length} chapters={CHAPTERS.length} terms={GLOSSARY.length} signal="Bits → uncertainty → meaning" nodes={["Bits", "Code", "Entropy", "Signal", "AI"]} />
       <div style={{ padding: "40px 0 28px", textAlign: "center", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 50% 0%, #22D3EE0A 0%, transparent 70%)", pointerEvents: "none" }} />
         <div style={{ color: T.accent, fontSize: 11, fontWeight: 700, letterSpacing: ".15em", textTransform: "uppercase", marginBottom: 10 }}>

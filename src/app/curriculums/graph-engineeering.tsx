@@ -4,6 +4,7 @@
 import jsx from "react/jsx-runtime";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { RelatedCurriculums } from "./related-curriculums";
+import { CurriculumHero } from "./curriculum-hero";
 
 // ── Design Tokens ─────────────────────────────────────────────────────────
 const T = {
@@ -2122,7 +2123,7 @@ function RoadmapMap({ openChapter, read }) {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, marginBottom: 16, flexWrap: "wrap" }}>
         <div>
           <div style={{ color: T.accent, fontSize: 11, letterSpacing: ".16em", fontWeight: 800, textTransform: "uppercase" }}>Learning roadmap</div>
-          <div style={{ color: T.text, fontSize: mobile ? 25 : 32, lineHeight: 1.1, fontWeight: 800, marginTop: 6 }}>Graph engineering path</div>
+          <div style={{ color: T.text, fontSize: mobile ? 25 : 32, lineHeight: 1.1, fontWeight: 800, marginTop: 6 }}>Engineering Pathway</div>
         </div>
         <div style={{ display: "flex", flexWrap: mobile ? "nowrap" : "wrap", gap: 8, justifyContent: mobile ? "flex-start" : "flex-end", overflowX: mobile ? "auto" : "visible", width: mobile ? "100%" : "auto", paddingBottom: mobile ? 2 : 0 }}>
           {ROADMAP_TIERS.map((tier) => (
@@ -3801,6 +3802,7 @@ function Overview({
   const recentlyRead = [...read].slice(-3).reverse();
   return (
     <div className="curriculum-overview" style={{ maxWidth: 980, margin: "0 auto", padding: "0 16px 60px" }}>
+      <CurriculumHero eyebrow="Learning roadmap" title="Graph Engineering" description="A visual route from nodes and edges to graph-native AI, compilers, and organizational memory." icon="🕸️" color="#22D3EE" secondaryColor="#A78BFA" parts={PARTS.length} chapters={CHAPTERS.length} terms={GLOSSARY.length} signal="Nodes → algorithms → intelligence" nodes={["Nodes", "Paths", "KG", "GNN", "AI"]} />
       <div style={{ padding: "40px 0 28px", textAlign: "center", position: "relative", overflow: "hidden" }}>
         <div style={{
           position: "absolute", inset: 0,
@@ -3811,11 +3813,11 @@ function Overview({
           color: T.accent, fontSize: 11, fontWeight: 700, letterSpacing: ".15em",
           textTransform: "uppercase", marginBottom: 10,
         }}>Version 1.0 · 2026</div>
-        <h1 style={{
+        {/* <h1 style={{
           fontSize: 34, fontWeight: 900, margin: "0 0 10px",
           background: "linear-gradient(135deg,#F0F6FF 30%,#22D3EE)",
           WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", lineHeight: 1.2,
-        }}>Graph Engineering</h1>
+        }}>Graph Engineering</h1> */}
        <p style={{ color: T.muted, fontSize: 15, margin: "0 0 24px" }}>
   {PARTS.length} Parts · {CHAPTERS.length} Chapters · From Nodes and Edges to Graph-Native AI
 </p>
