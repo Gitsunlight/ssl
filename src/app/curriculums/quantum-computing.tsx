@@ -3,6 +3,7 @@
 
 import jsx from "react/jsx-runtime";
 import { useState, useEffect, useRef, useCallback } from "react";
+import { RelatedCurriculums } from "./related-curriculums";
 
 // ── Design Tokens ─────────────────────────────────────────────────────────
 const T = {
@@ -1354,10 +1355,7 @@ function LinearAlgebraDemo() {
   const norm = Math.sqrt(vec[0] ** 2 + vec[1] ** 2 + vec[2] ** 2 + vec[3] ** 2);
   const normalized = vec.map((v) => v / norm);
   return (
-    <div>
-      <p style={{ color: T.muted, fontSize: 13, marginBottom: 12 }}>
-        A two-qubit state has 4 complex amplitudes. Probabilities must sum to 1.
-      </p>
+    <div style={{ padding: 20 }}>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 14 }}>
         {["|00⟩", "|01⟩", "|10⟩", "|11⟩"].map((label, i) => (
           <div key={i}>
@@ -2957,6 +2955,7 @@ function ChapterView({ ch, onBack, color, read, toggleRead, notes, setNotes, onS
           }}>✦ {ch.insight}</div>
         )}
       </div>
+      <RelatedCurriculums currentId="quantum-computing" chapter={ch} />
       <div style={{
         display: "flex", gap: 4, marginBottom: 16, background: T.surface,
         borderRadius: 10, padding: 4, border: `1px solid ${T.border}`,
@@ -3142,7 +3141,7 @@ function GlossaryView({ openChapter }) {
 }
 
 // ── Sidebar ───────────────────────────────────────────────────────────────
-function Sidebar({ view, setView, openChapter, selCh, read, quizScores, search, setSearch }) {
+function Sidebar({ view, setView, openChapter, selCh, read, quizScores, search, setSearch, mobile }) {
   const [expanded, setExpanded] = useState(new Set([0, 1, 2, 3, 4, 5, 6]));
   const toggle = (id) => setExpanded((s) => {
     const n = new Set(s);
@@ -3154,9 +3153,10 @@ function Sidebar({ view, setView, openChapter, selCh, read, quizScores, search, 
   const maxQ = Object.values(quizScores).reduce((a, s) => a + s.total, 0);
   return (
     <div style={{
-      width: 270, background: T.surface, borderRight: `1px solid ${T.border}`,
-      height: "100vh", overflowY: "auto", flexShrink: 0,
+      width: mobile ? "100%" : 270, background: T.surface, borderRight: mobile ? "none" : `1px solid ${T.border}`,
+      borderBottom: mobile ? `1px solid ${T.border}` : "none", height: mobile ? "auto" : "100vh", overflowY: mobile ? "visible" : "auto", flexShrink: 0,
       display: "flex", flexDirection: "column",
+      maxHeight: mobile ? "none" : "100vh",
     }}>
       <div style={{ padding: "18px 16px 12px", borderBottom: `1px solid ${T.border}` }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 2 }}>
@@ -3422,6 +3422,14 @@ export default function App() {
   const [notes, setNotes] = useState({});
   const [quizScores, setQuizScores] = useState({});
   const [search, setSearch] = useState("");
+  const [mobile, setMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setMobile(window.innerWidth <= 900);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   useEffect(() => {
     const l = document.createElement("link");
@@ -3446,13 +3454,13 @@ export default function App() {
 
   return (
     <div style={{
-      display: "flex", height: "100vh", overflow: "hidden",
+      display: "flex", flexDirection: mobile ? "column" : "row", minHeight: "100vh", height: mobile ? "auto" : "100vh", overflow: mobile ? "visible" : "hidden",
       background: T.bg, color: T.text,
     }}>
       <Sidebar view={view} setView={setView} openChapter={openChapter}
         selCh={selCh} read={read} quizScores={quizScores}
-        search={search} setSearch={setSearch} />
-      <div style={{ flex: 1, overflowY: "auto" }}>
+        search={search} setSearch={setSearch} mobile={mobile} />
+      <div style={{ flex: 1, overflowY: mobile ? "visible" : "auto", minWidth: 0 }}>
         {view === "chapter" && ch ? (
           <ChapterView ch={ch} color={color} onBack={() => setView("home")}
             read={read} toggleRead={toggleRead} notes={notes} setNotes={setNotes} onScore={onScore} />

@@ -3,6 +3,7 @@
 
 import jsx from "react/jsx-runtime";
 import { useState, useEffect, useRef, useCallback } from "react";
+import { RelatedCurriculums } from "./related-curriculums";
 
 // ── Design Tokens ─────────────────────────────────────────────────────────
 const T = {
@@ -2059,10 +2060,19 @@ const ROADMAP_TIERS = [
 
 function RoadmapMap({ openChapter, read }) {
   const [hoveredChapter, setHoveredChapter] = useState(null);
-  const width = 950;
-  const height = 520;
-  const marginLeft = 188;
-  const marginRight = 26;
+  const [mobile, setMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setMobile(window.innerWidth <= 760);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  const width = mobile ? 760 : 950;
+  const height = mobile ? 560 : 520;
+  const marginLeft = 0;
+  const marginRight = mobile ? 12 : 18;
   const bandWidth = (width - marginLeft - marginRight) / ROADMAP_TIERS.length;
 
   const tierOf = (chapterNumber) => {
@@ -2088,7 +2098,7 @@ function RoadmapMap({ openChapter, read }) {
     const tierChapters = CHAPTERS.filter((chapter) => tierOf(chapter.n) === tierIndex).sort((a, b) => a.n - b.n);
     const chapterIndex = tierChapters.findIndex((chapter) => chapter.n === chapterNumber);
     const partIndex = partIndexOf(chapterNumber);
-    return 420 - tierIndex * 92 - chapterIndex * 20 + partIndex * 4;
+    return 520 - tierIndex * 92 - chapterIndex * 20 + partIndex * 4;
   };
 
   const chapterColor = (chapterNumber) => {
@@ -2102,7 +2112,7 @@ function RoadmapMap({ openChapter, read }) {
     <div
       style={{
         marginBottom: 28,
-        padding: "18px 18px 14px",
+        padding: mobile ? "14px 12px 12px" : "18px 18px 14px",
         borderRadius: 22,
         background: "linear-gradient(180deg, rgba(8,17,31,0.96), rgba(6,12,23,0.98))",
         border: `1px solid ${T.border}`,
@@ -2112,9 +2122,9 @@ function RoadmapMap({ openChapter, read }) {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, marginBottom: 16, flexWrap: "wrap" }}>
         <div>
           <div style={{ color: T.accent, fontSize: 11, letterSpacing: ".16em", fontWeight: 800, textTransform: "uppercase" }}>Learning roadmap</div>
-          <div style={{ color: T.text, fontSize: 32, lineHeight: 1.1, fontWeight: 800, marginTop: 6 }}>Graph engineering path</div>
+          <div style={{ color: T.text, fontSize: mobile ? 25 : 32, lineHeight: 1.1, fontWeight: 800, marginTop: 6 }}>Graph engineering path</div>
         </div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 10, justifyContent: "flex-end" }}>
+        <div style={{ display: "flex", flexWrap: mobile ? "nowrap" : "wrap", gap: 8, justifyContent: mobile ? "flex-start" : "flex-end", overflowX: mobile ? "auto" : "visible", width: mobile ? "100%" : "auto", paddingBottom: mobile ? 2 : 0 }}>
           {ROADMAP_TIERS.map((tier) => (
             <div
               key={tier.name}
@@ -2122,7 +2132,7 @@ function RoadmapMap({ openChapter, read }) {
                 display: "flex",
                 alignItems: "center",
                 gap: 8,
-                padding: "7px 12px",
+                padding: mobile ? "7px 10px" : "7px 12px",
                 borderRadius: 999,
                 background: "rgba(13, 22, 37, 0.9)",
                 border: `1px solid ${T.border}`,
@@ -2130,34 +2140,35 @@ function RoadmapMap({ openChapter, read }) {
               }}
             >
               <span style={{ width: 10, height: 10, borderRadius: "50%", background: tier.color, display: "inline-block", boxShadow: `0 0 18px ${tier.color}` }} />
-              <span style={{ color: T.text, fontSize: 12, fontWeight: 700 }}>{tier.name}</span>
+                <span style={{ color: T.text, fontSize: 12, fontWeight: 700, whiteSpace: "nowrap" }}>{tier.name}</span>
             </div>
           ))}
         </div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "220px minmax(0, 1fr)", gap: 18, alignItems: "stretch" }}>
+      <div style={{ display: "grid", gridTemplateColumns: mobile ? "1fr" : "220px minmax(0, 1fr)", gap: 0, alignItems: "stretch", overflow: "hidden" }}>
         <div
           style={{
             borderRadius: 18,
             background: "rgba(15, 24, 39, 0.8)",
             border: `1px solid ${T.border}`,
             padding: "14px 12px 10px",
-            minHeight: 420,
+            minHeight: mobile ? 0 : 420,
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
+            ...(mobile ? { flexDirection: "row", overflowX: "auto", gap: 4, padding: "8px", justifyContent: "flex-start" } : {}),
           }}
         >
           {PARTS.map((part) => (
-            <div key={part.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "5px 8px", minHeight: 26 }}>
-              <span style={{ color: T.text, fontSize: 13, fontWeight: 500, opacity: 0.88, letterSpacing: "0.01em" }}>{part.label}</span>
+            <div key={part.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: mobile ? "7px 10px" : "5px 8px", minHeight: 26, flex: mobile ? "0 0 auto" : undefined }}>
+              <span style={{ color: T.text, fontSize: mobile ? 11 : 13, fontWeight: 600, opacity: 0.88, letterSpacing: "0.01em", whiteSpace: mobile ? "nowrap" : "normal" }}>{part.label}</span>
             </div>
           ))}
         </div>
 
-        <div style={{ overflowX: "auto" }}>
-          <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} style={{ display: "block", width: "100%", minWidth: 720, maxWidth: "100%" }}>
+        <div style={{ overflow: "hidden", borderRadius: 16 }}>
+          <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} style={{ display: "block", width: "100%", height: "auto", minWidth: 0, maxWidth: "100%" }}>
             <defs>
               <radialGradient id="roadmap-bg" cx="50%" cy="38%" r="72%">
                 <stop offset="0%" stopColor="#0A1830" />
@@ -3407,6 +3418,7 @@ function ChapterView({ ch, onBack, color, read, toggleRead, notes, setNotes, onS
         background: "transparent", border: "none", color: T.muted,
         cursor: "pointer", fontSize: 13, padding: "16px 0", marginBottom: 4,
       }}>← Back to Curriculum</button>
+      <RelatedCurriculums currentId="graph-engineering" chapter={ch} />
       <div style={{
         padding: "20px 24px", borderRadius: 14, background: T.surface,
         border: `1px solid ${color}44`, marginBottom: 20,

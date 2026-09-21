@@ -4,6 +4,8 @@ import CybersecurityCurriculumPage from "@/app/curriculums/cybersecurity";
 import DataScienceCurriculumPage from "@/app/curriculums/data-science";
 import FrontierLLMCurriculumPage from "@/app/curriculums/frontier-llm";
 import GraphCurriculumPage from "@/app/curriculums/graph-engineeering";
+import InformationTheoryCurriculumPage from "@/app/curriculums/information-theory";
+import PiperMonorepoCurriculumPage from "@/app/curriculums/piper-monorepo";
 import QuantumComputingCurriculumPage from "@/app/curriculums/quantum-computing";
 
 const supportedCurricula = {
@@ -12,6 +14,8 @@ const supportedCurricula = {
   "data-science": DataScienceCurriculumPage,
   "frontier-llm": FrontierLLMCurriculumPage,
   "graph-engineering": GraphCurriculumPage,
+  "information-theory": InformationTheoryCurriculumPage,
+  "piper-monorepo": PiperMonorepoCurriculumPage,
   "quantum-computing": QuantumComputingCurriculumPage,
 } as const;
 

@@ -204,6 +204,46 @@ const CURRICULUMS = [
     author: "Sunlight Quantum Research",
   },
   {
+    id: "information-theory",
+    title: "Information Theory Curriculum",
+    subtitle: "From Electrons to Meaning",
+    description:
+      "Explore probability, entropy, communication, compression, and the foundations of modern signal processing and AI through a Shannon-inspired lens.",
+    icon: "📡",
+    color: "#2DD4BF",
+    gradient: "linear-gradient(135deg, #2DD4BF, #60A5FA)",
+    chapters: 32,
+    parts: 8,
+    quizzes: 10,
+    terms: 26,
+    tags: ["Information Theory", "Signals", "Compression", "Probability", "AI"],
+    path: "/curriculum/information-theory",
+    featured: true,
+    version: "2.0",
+    date: "2026",
+    author: "Sunlight Systems Theory",
+  },
+  {
+    id: "piper-monorepo",
+    title: "Google-Scale Monorepo Curriculum",
+    subtitle: "Piper, CITC, and the build graph at massive scale",
+    description:
+      "Learn how Google’s monorepo architecture scales across source control, workspaces, build graphs, and developer productivity in a single coordinated repository.",
+    icon: "🧩",
+    color: "#14B8A6",
+    gradient: "linear-gradient(135deg, #14B8A6, #22D3EE)",
+    chapters: 28,
+    parts: 7,
+    quizzes: 8,
+    terms: 20,
+    tags: ["Monorepo", "Build Systems", "DevEx", "Google", "Architecture"],
+    path: "/curriculum/piper-monorepo",
+    featured: true,
+    version: "1.0",
+    date: "2026",
+    author: "Sunlight Platform Engineering",
+  },
+  {
     id: "graph-engineering",
     title: "Graph Engineering Curriculum",
     subtitle: "From Theory to Scalable Graph Solutions",
@@ -286,6 +326,9 @@ export default function Home() {
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [visibleCount, setVisibleCount] = useState(6);
   const [showAllTags, setShowAllTags] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [requestInput, setRequestInput] = useState("");
+  const [requestError, setRequestError] = useState("");
 
   // Get all unique tags
   const allTags = Array.from(new Set(CURRICULUMS.flatMap((c) => c.tags)));
@@ -321,6 +364,17 @@ export default function Home() {
     // Add smooth scrolling
     document.documentElement.style.scrollBehavior = "smooth";
   }, []);
+
+  const handleRequestSubmit = () => {
+    if (!requestInput.trim()) {
+      setRequestError("Please enter a request before submitting.");
+      setIsSubmitted(false);
+      return;
+    }
+
+    setRequestError("");
+    setIsSubmitted(true);
+  };
 
   return (
     <div className="page-shell" style={{ background: T.bg, color: T.text, minHeight: "100vh" }}>
@@ -631,20 +685,81 @@ export default function Home() {
           >
             upvote/submit for what you need. we&apos;ll build it for you.
           </div>
-          <button
-            style={{
-              border: `1px solid ${T.accent}`,
-              background: `${T.accent}18`,
-              color: T.text,
-              borderRadius: 999,
-              padding: "10px 18px",
-              fontSize: 13,
-              fontWeight: 700,
-              cursor: "pointer",
-            }}
-          >
-            submit a request
-          </button>
+
+          {!isSubmitted ? (
+            <div style={{ display: "flex", flexDirection: "column", gap: 12, maxWidth: 560, width: "100%", margin: "0 auto" }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  width: "100%",
+                  background: T.surface,
+                  border: `1px solid ${requestError ? T.red : T.border}`,
+                  borderRadius: 12,
+                  padding: "6px 8px 6px 12px",
+                }}
+              >
+                <input
+                  type="text"
+                  value={requestInput}
+                  onChange={(e) => {
+                    setRequestInput(e.target.value);
+                    if (requestError) setRequestError("");
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      handleRequestSubmit();
+                    }
+                  }}
+                  placeholder="Tell us what you want to learn or build"
+                  style={{
+                    flex: 1,
+                    minWidth: 0,
+                    background: "transparent",
+                    border: "none",
+                    color: T.text,
+                    fontSize: 14,
+                    outline: "none",
+                  }}
+                />
+
+                <button
+                  onClick={handleRequestSubmit}
+                  style={{
+                    border: `1px solid ${T.accent}`,
+                    background: `${T.accent}18`,
+                    color: T.text,
+                    borderRadius: 999,
+                    padding: "10px 18px",
+                    fontSize: 13,
+                    fontWeight: 700,
+                    cursor: "pointer",
+                    flexShrink: 0,
+                  }}
+                >
+                  submit a request
+                </button>
+              </div>
+
+              {requestError && (
+                <div style={{ color: T.red, fontSize: 12, fontWeight: 600 }}>
+                  {requestError}
+                </div>
+              )}
+            </div>
+          ) : (
+            <div
+              style={{
+                marginTop: 12,
+                color: T.green,
+                fontSize: 14,
+                fontWeight: 700,
+              }}
+            >
+              thank you for letting us know
+            </div>
+          )}
         </div>
       </div>
 

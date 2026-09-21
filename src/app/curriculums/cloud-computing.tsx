@@ -3,6 +3,7 @@
 
 import jsx from "react/jsx-runtime";
 import { useState, useEffect, useRef, useCallback } from "react";
+import { RelatedCurriculums } from "./related-curriculums";
 
 // ── Design Tokens ─────────────────────────────────────────────────────────
 const T = {
@@ -2664,6 +2665,7 @@ function ChapterView({ ch, onBack, color, read, toggleRead, notes, setNotes, onS
         background: "transparent", border: "none", color: T.muted,
         cursor: "pointer", fontSize: 13, padding: "16px 0", marginBottom: 4,
       }}>← Back to Curriculum</button>
+      <RelatedCurriculums currentId="cloud-computing" chapter={ch} />
       <div style={{
         padding: "20px 24px", borderRadius: 14, background: T.surface,
         border: `1px solid ${color}44`, marginBottom: 20,

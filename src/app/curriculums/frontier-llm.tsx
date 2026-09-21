@@ -2,6 +2,7 @@
 
 import jsx from "react/jsx-runtime";
 import { useState, useEffect, useRef, useCallback } from "react";
+import { RelatedCurriculums } from "./related-curriculums";
 
 // ── Design Tokens ─────────────────────────────────────────────────────────
 const T = {
@@ -55,7 +56,7 @@ const PARTS = [
   },
   { id: 4, label: "How Models Learn", icon: "📈", chs: [16] },
   { id: 5, label: "Alignment Systems", icon: "🎯", chs: [17, 18, 19, 20] },
-  { id: 6, label: "Inference Systems", icon: "⚙️", chs: [21, 22, 23, 24] },
+  { id: 6, label: "Inference Systems", icon: "⚙️", chs: [21, 22, 23, 24, 25, 26] },
   { id: 7, label: "Evaluation Systems", icon: "📊", chs: [27] },
   { id: 8, label: "Distributed Training", icon: "🖥️", chs: [31] },
   { id: 9, label: "Mixture of Experts", icon: "🔀", chs: [33] },
@@ -702,6 +703,83 @@ const CHAPTERS = [
     ],
   },
   {
+    n: 25,
+    part: 6,
+    title: "Bits, Bytes, and Binary Representation",
+    tagline: "The smallest units of information become the memory budget of every model.",
+    insight: "A bit stores one binary choice; eight bits make one byte because 8 bits provide 2^8 = 256 possible patterns.",
+    content: [
+      {
+        type: "p",
+        text: "A bit is a binary digit: it can be 0 or 1. A byte is a group of 8 bits. Because each bit has two possible states, one byte has 2 × 2 × 2 × 2 × 2 × 2 × 2 × 2 = 2^8 = 256 possible patterns, representing unsigned integer values from 0 through 255.",
+      },
+      {
+        type: "code",
+        text: "1 bit   = 2 values: 0, 1\n2 bits  = 4 values: 00, 01, 10, 11\n4 bits  = 16 values\n8 bits  = 256 values = 1 byte\n\n1 KB = 1,024 bytes (binary convention)\n1 MB = 1,024 KB\n1 GB = 1,024 MB\n\nThe model memory question:\nnumber of parameters × bytes per parameter",
+      },
+      {
+        type: "table",
+        head: ["Unit", "Size", "Possible patterns"],
+        rows: [
+          ["Bit", "1 binary digit", "2"],
+          ["Nibble", "4 bits", "16"],
+          ["Byte", "8 bits", "256"],
+          ["FP16 value", "16 bits = 2 bytes", "65,536 bit patterns"],
+        ],
+      },
+      {
+        type: "p",
+        text: "A byte is a convenient hardware and memory unit, not a law of mathematics. Eight bits became the practical standard because it can encode 256 symbols, enough for an early character set and convenient for addressing memory. Modern systems measure model weights in bytes because every parameter occupies a fixed number of bytes at a chosen numeric format.",
+      },
+      {
+        type: "insight",
+        text: "A 7-billion-parameter model needs about 28 GB just for FP32 weights, 14 GB for FP16, and 7 GB for an idealized 8-bit representation — before runtime buffers, gradients, optimizer state, and the KV cache.",
+      },
+    ],
+  },
+  {
+    n: 26,
+    part: 6,
+    title: "Floating-Point Precision and Quantization",
+    tagline: "Trade numerical range and accuracy for memory, bandwidth, and scale.",
+    insight: "Lower precision lets the same hardware store and move more parameters, but accuracy and stability must be measured rather than assumed.",
+    demo: "precision",
+    content: [
+      {
+        type: "p",
+        text: "Floating-point formats approximate real numbers using sign, exponent, and fraction bits. More bits generally provide more range and finer numerical resolution; fewer bits reduce memory and bandwidth. Training often prefers FP32 or BF16/FP16 mixed precision, while inference can use FP16, BF16, INT8, or FP8 depending on the model and hardware.",
+      },
+      {
+        type: "table",
+        head: ["Format", "Bits per parameter", "Bytes per parameter", "Theoretical weight capacity", "Recommended maximum*"],
+        rows: [
+          ["FP64 / double", "64-bit", "8 bytes", "~64B parameters", "~50B parameters"],
+          ["FP32 / single", "32-bit", "4 bytes", "~128B parameters", "~100B parameters"],
+          ["FP16 / BF16 / half", "16-bit", "2 bytes", "~256B parameters", "~200B parameters"],
+          ["FP8 / INT8", "8-bit", "1 byte", "~512B parameters", "~400B parameters"],
+        ],
+      },
+      {
+        type: "p",
+        text: "These capacity estimates assume roughly 400 GB of available memory and count weights only. The recommended maximum leaves an overhead buffer for activations, temporary workspaces, framework metadata, communication, and the KV cache. A model with fewer bytes per parameter can therefore fit more weights, but fitting is not the same as producing equal quality.",
+      },
+      {
+        type: "table",
+        head: ["Precision", "Best fit", "Tradeoff"],
+        rows: [
+          ["FP64", "Scientific and numerical workloads", "Highest precision, highest memory cost"],
+          ["FP32", "High-accuracy training and compatibility", "Stable but expensive at frontier scale"],
+          ["FP16 / BF16", "Deep learning training and serving", "Strong efficiency; BF16 keeps wider range"],
+          ["FP8 / INT8", "Large-scale inference and acceleration", "Maximum efficiency; calibration and accuracy checks required"],
+        ],
+      },
+      {
+        type: "insight",
+        text: "Choose the lowest precision that meets the accuracy, stability, and latency target. Quantization is an engineering experiment involving calibration data, outlier handling, kernels, and evaluation — not merely deleting bits.",
+      },
+    ],
+  },
+  {
     n: 27,
     part: 7,
     title: "Evaluation Systems",
@@ -1168,6 +1246,34 @@ const QUIZZES = {
       exp: "KV Cache stores the Key (K) and Value (V) tensors computed from all previous tokens. When generating a new token, you compute its Q, K, V — then look up all previous K/V pairs from the cache. Only one new attention computation needed per new token, regardless of context length.",
     },
   ],
+  25: [
+    {
+      q: "How many bits make one byte?",
+      opts: ["2", "4", "8", "16"],
+      ans: 2,
+      exp: "A byte is conventionally 8 bits. Since each bit has 2 states, one byte has 2^8 = 256 possible bit patterns and can represent unsigned values from 0 through 255.",
+    },
+    {
+      q: "How do you estimate weight memory for a model?",
+      opts: ["Parameters + bits", "Parameters × bytes per parameter", "Layers ÷ tokens", "Bytes × GPUs only"],
+      ans: 1,
+      exp: "Weight memory is approximately the number of parameters multiplied by the bytes used for each parameter. Runtime buffers, activations, optimizer state, and KV cache add extra memory.",
+    },
+  ],
+  26: [
+    {
+      q: "Why does lower precision let a model fit more parameters?",
+      opts: ["It removes layers", "Each parameter occupies fewer bytes", "It skips all computation", "It increases memory bandwidth only"],
+      ans: 1,
+      exp: "FP16 uses 2 bytes per parameter while FP32 uses 4, so the same memory can hold approximately twice as many weights before accounting for runtime overhead.",
+    },
+    {
+      q: "What is the main caution when using FP8 or INT8?",
+      opts: ["They cannot run on GPUs", "Accuracy and numerical stability must be evaluated", "They always require FP64", "They use more memory than FP32"],
+      ans: 1,
+      exp: "Lower precision improves memory and throughput, but calibration, outliers, kernels, and model quality must be measured for the target workload.",
+    },
+  ],
   33: [
     {
       q: "The key difference between dense and MoE models:",
@@ -1375,6 +1481,26 @@ const GLOSSARY = [
     ch: 24,
   },
   {
+    term: "Bit",
+    def: "Binary digit with two possible states, 0 or 1. The fundamental unit of digital information.",
+    ch: 25,
+  },
+  {
+    term: "Byte",
+    def: "A group of 8 bits. It has 2^8 = 256 possible patterns and can represent unsigned values from 0 through 255.",
+    ch: 25,
+  },
+  {
+    term: "Floating-point precision",
+    def: "The number format used to approximate real values with sign, exponent, and fraction fields. FP32 uses 4 bytes; FP16 uses 2; FP8 uses 1.",
+    ch: 26,
+  },
+  {
+    term: "Quantization",
+    def: "Representing model weights or activations with fewer bits to reduce memory and increase throughput, while measuring accuracy and stability tradeoffs.",
+    ch: 26,
+  },
+  {
     term: "Vector",
     def: "A list of numbers representing a point in mathematical space. Words become vectors (embeddings) where spatial distance encodes semantic similarity.",
     ch: 1,
@@ -1424,6 +1550,9 @@ const EDGES = [
   [21, 22],
   [22, 23],
   [23, 24],
+  [24, 25],
+  [25, 26],
+  [26, 27],
   [21, 24],
   [27, 16],
   [27, 17],
@@ -2833,6 +2962,41 @@ function Block({ b }: { b: (typeof CHAPTERS)[0]["content"][0] }) {
   return null;
 }
 
+function PrecisionDemo() {
+  const formats = [
+    { name: "FP64", bits: 64, bytes: 8, max: "~50B", color: "#60A5FA", use: "Scientific accuracy" },
+    { name: "FP32", bits: 32, bytes: 4, max: "~100B", color: "#34D399", use: "Training compatibility" },
+    { name: "FP16 / BF16", bits: 16, bytes: 2, max: "~200B", color: "#FBBF24", use: "Training and serving" },
+    { name: "FP8 / INT8", bits: 8, bytes: 1, max: "~400B", color: "#F472B6", use: "Efficient inference" },
+  ];
+  const [selected, setSelected] = useState(2);
+  const format = formats[selected];
+  return (
+    <div style={{ padding: 20 }}>
+      <div style={{ color: T.muted, fontSize: 12, marginBottom: 10 }}>Select a representation to compare memory cost and practical use.</div>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 6, marginBottom: 14 }}>
+        {formats.map((item, index) => (
+          <button key={item.name} onClick={() => setSelected(index)} style={{ padding: "9px 6px", borderRadius: 8, border: `1px solid ${selected === index ? item.color : T.border}`, background: selected === index ? `${item.color}22` : T.elevated, color: selected === index ? item.color : T.muted, cursor: "pointer", fontSize: 11, fontWeight: 700 }}>{item.name}</button>
+        ))}
+      </div>
+      <div style={{ padding: "14px 16px", borderRadius: 10, background: T.elevated, border: `1px solid ${format.color}66` }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
+          <span style={{ color: format.color, fontSize: 20, fontWeight: 800 }}>{format.name}</span>
+          <span style={{ color: T.text, fontSize: 13 }}>{format.bits}-bit = {format.bytes} byte{format.bytes > 1 ? "s" : ""} per parameter</span>
+        </div>
+        <div style={{ height: 10, borderRadius: 6, background: T.border, overflow: "hidden", marginBottom: 10 }}>
+          <div style={{ width: `${(format.bytes / 8) * 100}%`, height: "100%", background: format.color, transition: "width .2s" }} />
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, color: T.subtle, fontSize: 12 }}>
+          <span>Practical maximum: <strong style={{ color: format.color }}>{format.max} parameters*</strong></span>
+          <span>Best fit: <strong style={{ color: T.text }}>{format.use}</strong></span>
+        </div>
+      </div>
+      <div style={{ color: T.muted, fontSize: 11, marginTop: 10 }}>* Approximate weight-only capacity with an overhead buffer; actual limits depend on hardware, runtime, activations, and KV cache.</div>
+    </div>
+  );
+}
+
 // ── Chapter View ──────────────────────────────────────────────────────────
 function ChapterView({
   ch,
@@ -2861,6 +3025,7 @@ function ChapterView({
     training: TrainingDemo,
     moe: MoEDemo,
     kvcache: KVCacheDemo,
+    precision: PrecisionDemo,
   };
   const DemoComponent = ch.demo ? DemoComponents[ch.demo] : null;
   const TABS = [
@@ -2966,6 +3131,7 @@ function ChapterView({
           </div>
         )}
       </div>
+      <RelatedCurriculums currentId="frontier-llm" chapter={ch} />
       <div
         style={{
           display: "flex",
