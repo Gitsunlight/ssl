@@ -1171,7 +1171,7 @@ function BinaryDecoder() {
         }}
         placeholder="Enter 8 bits"
       />
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(140px, 100%), 1fr))", gap: 8 }}>
         {[
           { label: "Decimal", value: decimal ?? "—" },
           { label: "Hex", value: hex },
@@ -1755,7 +1755,7 @@ function ChapterView({
     { id: "notes", label: "📝 Notes" },
   ];
   return (
-    <div style={{ maxWidth: 740, margin: "0 auto", padding: "0 16px 60px" }}>
+    <div className="curriculum-content" style={{ maxWidth: 740, margin: "0 auto", padding: "0 16px 60px" }}>
       <button
         onClick={onBack}
         style={{
@@ -2006,7 +2006,7 @@ function GlossaryView({ openChapter }: { openChapter: (n: number) => void }) {
           boxSizing: "border-box",
         }}
       />
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(290px,1fr))", gap: 10 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(min(290px,100%),1fr))", gap: 10 }}>
         {filtered.map((g) => (
           <div key={g.term} style={{ padding: "14px 16px", borderRadius: 10, background: T.surface, border: `1px solid ${T.border}` }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 6 }}>
@@ -2279,7 +2279,7 @@ function Overview({
   const highlighted = activePath !== null ? new Set(paths[activePath].chs) : null;
   const recentlyRead = [...read].slice(-3).reverse();
   return (
-    <div style={{ maxWidth: 980, margin: "0 auto", padding: "0 16px 60px" }}>
+    <div className="curriculum-overview" style={{ maxWidth: 980, margin: "0 auto", padding: "0 16px 60px" }}>
       <div style={{ padding: "40px 0 28px", textAlign: "center", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 50% 0%, #22D3EE0A 0%, transparent 70%)", pointerEvents: "none" }} />
         <div style={{ color: T.accent, fontSize: 11, fontWeight: 700, letterSpacing: ".15em", textTransform: "uppercase", marginBottom: 10 }}>
@@ -2328,7 +2328,7 @@ function Overview({
           ))}
         </div>
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 10, marginBottom: 20 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(140px, 100%), 1fr))", gap: 10, marginBottom: 20 }}>
         {[
           { n: CHAPTERS.length, label: "Chapters" },
           { n: 13, label: "Parts" },

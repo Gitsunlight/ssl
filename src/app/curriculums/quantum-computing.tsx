@@ -1853,7 +1853,7 @@ function OracleDemo() {
       <p style={{ color: T.muted, fontSize: 13, marginBottom: 12 }}>
         Define a Boolean function f: {"{0,1}²"} → {"{0,1}"} and see if it's constant or balanced
       </p>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 8, marginBottom: 14 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(140px, 100%), 1fr))", gap: 8, marginBottom: 14 }}>
         {f.map((v, i) => (
           <div key={i} onClick={() => toggle(i)} style={{
             padding: "16px 8px", borderRadius: 8, textAlign: "center",
@@ -2920,7 +2920,7 @@ function ChapterView({ ch, onBack, color, read, toggleRead, notes, setNotes, onS
     { id: "notes", label: "📝 Notes" },
   ];
   return (
-    <div style={{ maxWidth: 740, margin: "0 auto", padding: "0 16px 60px" }}>
+    <div className="curriculum-content" style={{ maxWidth: 740, margin: "0 auto", padding: "0 16px 60px" }}>
       <button onClick={onBack} style={{
         background: "transparent", border: "none", color: T.muted,
         cursor: "pointer", fontSize: 13, padding: "16px 0", marginBottom: 4,
@@ -3117,7 +3117,7 @@ function GlossaryView({ openChapter }) {
           borderRadius: 10, padding: "12px 16px", color: T.text,
           fontSize: 14, outline: "none", marginBottom: 16, boxSizing: "border-box",
         }} />
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(290px,1fr))", gap: 10 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(min(290px,100%),1fr))", gap: 10 }}>
         {filtered.map((g) => (
           <div key={g.term} style={{
             padding: "14px 16px", borderRadius: 10, background: T.surface,
@@ -3273,7 +3273,7 @@ function Overview({ setView, openChapter, read, quizScores }) {
   const highlighted = activePath !== null ? new Set(paths[activePath].chs) : null;
   const recentlyRead = [...read].slice(-3).reverse();
   return (
-    <div style={{ maxWidth: 980, margin: "0 auto", padding: "0 16px 60px" }}>
+    <div className="curriculum-overview" style={{ maxWidth: 980, margin: "0 auto", padding: "0 16px 60px" }}>
       <div style={{ padding: "40px 0 28px", textAlign: "center", position: "relative", overflow: "hidden" }}>
         <div style={{
           position: "absolute", inset: 0,
@@ -3305,7 +3305,7 @@ function Overview({ setView, openChapter, read, quizScores }) {
           ))}
         </div>
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 10, marginBottom: 20 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(140px, 100%), 1fr))", gap: 10, marginBottom: 20 }}>
         {[
           { n: CHAPTERS.length, label: "Chapters" },
           { n: 11, label: "Parts" },

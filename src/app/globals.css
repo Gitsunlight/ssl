@@ -88,6 +88,68 @@ svg {
   min-height: 100vh;
 }
 
+.curriculum-content,
+.curriculum-overview {
+  width: 100%;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.curriculum-content > *,
+.curriculum-overview > * {
+  animation: curriculum-rise 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.curriculum-content > *:nth-child(2),
+.curriculum-overview > *:nth-child(2) {
+  animation-delay: 55ms;
+}
+
+.curriculum-content > *:nth-child(3),
+.curriculum-overview > *:nth-child(3) {
+  animation-delay: 100ms;
+}
+
+.curriculum-content pre,
+.curriculum-content table,
+.curriculum-content svg {
+  max-width: 100%;
+}
+
+@keyframes curriculum-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .curriculum-content,
+  .curriculum-overview {
+    overflow-wrap: anywhere;
+  }
+
+  .curriculum-content pre {
+    font-size: 11px !important;
+    line-height: 1.5 !important;
+  }
+
+  .curriculum-content table {
+    font-size: 12px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .curriculum-content > *,
+  .curriculum-overview > * {
+    animation: none;
+  }
+}
+
 .catalog-hero {
   padding: 60px 20px 40px;
   text-align: center;

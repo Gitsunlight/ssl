@@ -2229,7 +2229,7 @@ function MoEDemo() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(4,1fr)",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(140px, 100%), 1fr))",
           gap: 8,
           marginBottom: 16,
         }}
@@ -2974,7 +2974,7 @@ function PrecisionDemo() {
   return (
     <div style={{ padding: 20 }}>
       <div style={{ color: T.muted, fontSize: 12, marginBottom: 10 }}>Select a representation to compare memory cost and practical use.</div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 6, marginBottom: 14 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(140px, 100%), 1fr))", gap: 6, marginBottom: 14 }}>
         {formats.map((item, index) => (
           <button key={item.name} onClick={() => setSelected(index)} style={{ padding: "9px 6px", borderRadius: 8, border: `1px solid ${selected === index ? item.color : T.border}`, background: selected === index ? `${item.color}22` : T.elevated, color: selected === index ? item.color : T.muted, cursor: "pointer", fontSize: 11, fontWeight: 700 }}>{item.name}</button>
         ))}
@@ -3035,7 +3035,7 @@ function ChapterView({
     { id: "notes", label: "📝 Notes" },
   ];
   return (
-    <div style={{ maxWidth: 740, margin: "0 auto", padding: "0 16px 60px" }}>
+    <div className="curriculum-content" style={{ maxWidth: 740, margin: "0 auto", padding: "0 16px 60px" }}>
       <button
         onClick={onBack}
         style={{
@@ -3475,7 +3475,7 @@ function GlossaryView({ openChapter }: { openChapter: (n: number) => void }) {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fill,minmax(290px,1fr))",
+          gridTemplateColumns: "repeat(auto-fill,minmax(min(290px,100%),1fr))",
           gap: 10,
         }}
       >
@@ -3913,7 +3913,7 @@ function Overview({
     activePath !== null ? new Set(paths[activePath].chs) : null;
   const recentlyRead = [...read].slice(-3).reverse();
   return (
-    <div style={{ maxWidth: 980, margin: "0 auto", padding: "0 16px 60px" }}>
+    <div className="curriculum-overview" style={{ maxWidth: 980, margin: "0 auto", padding: "0 16px 60px" }}>
       <div
         style={{
           padding: "40px 0 28px",
@@ -3996,7 +3996,7 @@ function Overview({
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(4,1fr)",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(140px, 100%), 1fr))",
           gap: 10,
           marginBottom: 20,
         }}

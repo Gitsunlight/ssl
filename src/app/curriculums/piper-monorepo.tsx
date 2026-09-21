@@ -1298,7 +1298,7 @@ function ChapterView({ ch, onBack, color, read, toggleRead, notes, setNotes, onS
     { id: "notes", label: "📝 Notes" },
   ];
   return (
-    <div style={{ maxWidth: 740, margin: "0 auto", padding: "0 16px 60px" }}>
+    <div className="curriculum-content" style={{ maxWidth: 740, margin: "0 auto", padding: "0 16px 60px" }}>
       <button onClick={onBack} style={{ background: "transparent", border: "none", color: T.muted, cursor: "pointer", fontSize: 13, padding: "16px 0", marginBottom: 4 }}>← Back to Curriculum</button>
       <div style={{ padding: "20px 24px", borderRadius: 14, background: T.surface, border: `1px solid ${color}44`, marginBottom: 20 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12, flexWrap: "wrap" }}>
@@ -1423,7 +1423,7 @@ function GlossaryView({ openChapter }: { openChapter: (n: number) => void }) {
       <p style={{ color: T.muted, fontSize: 13, marginBottom: 16 }}>{GLOSSARY.length} key terms from the curriculum</p>
       <label htmlFor="glossary-search" style={{ display: "block", color: T.subtle, fontSize: 12, fontWeight: 700, marginBottom: 6 }}>Search glossary terms and definitions</label>
       <input id="glossary-search" aria-label="Search glossary terms and definitions" value={q} onChange={(e) => setQ(e.target.value)} style={{ width: "100%", background: T.elevated, border: `1px solid ${T.border}`, borderRadius: 10, padding: "12px 16px", color: T.text, fontSize: 14, outline: "none", marginBottom: 16, boxSizing: "border-box" }} />
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(290px,1fr))", gap: 10 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(min(290px,100%),1fr))", gap: 10 }}>
         {filtered.map((g) => (
           <div key={g.term} style={{ padding: "14px 16px", borderRadius: 10, background: T.surface, border: `1px solid ${T.border}` }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 6 }}>
@@ -1574,7 +1574,7 @@ function Overview({ setView, openChapter, read, quizScores }: {
   const highlighted = activePath !== null ? new Set(paths[activePath].chs) : null;
   const recentlyRead = [...read].slice(-3).reverse();
   return (
-    <div style={{ maxWidth: 980, margin: "0 auto", padding: "0 16px 60px" }}>
+    <div className="curriculum-overview" style={{ maxWidth: 980, margin: "0 auto", padding: "0 16px 60px" }}>
       <div style={{ padding: "40px 0 28px", textAlign: "center", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 50% 0%, #22D3EE0A 0%, transparent 70%)", pointerEvents: "none" }} />
         <div style={{ color: T.accent, fontSize: 11, fontWeight: 700, letterSpacing: ".15em", textTransform: "uppercase", marginBottom: 10 }}>Version 3.0 · 2026</div>
@@ -1589,7 +1589,7 @@ function Overview({ setView, openChapter, read, quizScores }: {
           ))}
         </div>
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 10, marginBottom: 20 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(140px, 100%), 1fr))", gap: 10, marginBottom: 20 }}>
         {[
           { n: CHAPTERS.length, label: "Chapters" },
           { n: PARTS.length, label: "Parts" },
